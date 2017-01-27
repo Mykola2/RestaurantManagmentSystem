@@ -82,7 +82,6 @@
 </style>
 <body>
 <jsp:include page="/view/navbar.jsp"/>
-<div class="jumbotron">
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
@@ -133,7 +132,7 @@
         </div>
     </div>
 </div>
-</div>
+
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 </body>
 </html>

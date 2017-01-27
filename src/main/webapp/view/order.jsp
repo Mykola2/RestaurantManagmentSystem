@@ -30,7 +30,7 @@
                                     <h4 class="media-middle">Price : ${orderItem.price}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <h4 class="media-middle">Weight : ${orderItem.itemAmount}</h4>
+                                    <h4 class="media-middle">Amount : ${orderItem.itemAmount}</h4>
                                 </div>
                             </div>
                         </div>

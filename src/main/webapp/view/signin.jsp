@@ -15,14 +15,14 @@
 <style>
     <%@include file="/bootstrap.min.css" %>
     <%@include file="/jumbotron.css" %>
-    body, html{
+    body, html {
         height: 100%;
         background-repeat: no-repeat;
         background-color: #d3d3d3;
         font-family: 'Oxygen', sans-serif;
     }
 
-    .main{
+    .main {
         margin-top: 70px;
     }
 
@@ -32,16 +32,16 @@
         font-weight: 400;
     }
 
-    hr{
+    hr {
         width: 10%;
         color: #fff;
     }
 
-    .form-group{
+    .form-group {
         margin-bottom: 15px;
     }
 
-    label{
+    label {
         margin-bottom: 15px;
     }
 
@@ -51,7 +51,7 @@
         padding-top: 3px;
     }
 
-    .main-login{
+    .main-login {
         background-color: #fff;
         /* shadows and rounded borders */
         -moz-border-radius: 2px;
@@ -63,7 +63,7 @@
 
     }
 
-    .main-center{
+    .main-center {
         margin-top: 30px;
         margin: 0 auto;
         max-width: 330px;
@@ -71,11 +71,11 @@
 
     }
 
-    .login-button{
+    .login-button {
         margin-top: 5px;
     }
 
-    .login-register{
+    .login-register {
         font-size: 11px;
         text-align: center;
     }
@@ -83,41 +83,45 @@
 <body>
 
 <jsp:include page="/view/navbar.jsp"/>
-<div class="jumbotron">
+
     <div class="container">
-    <div class="row main">
-        <div class="main-login main-center">
-            <form class="form-horizontal" method="post" action="/signin">
-                <div class="form-group">
-                    <label for="login" class="cols-sm-2 control-label">Login</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="login" id="login"  placeholder="Enter your login"/>
+        <div class="row main">
+            <div class="main-login main-center">
+                <form class="form-horizontal" method="post" action="/signin">
+                    <div class="form-group">
+                        <label for="login" class="cols-sm-2 control-label">Login</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="login" id="login"
+                                       placeholder="Enter your login"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="password" class="cols-sm-2 control-label">Password</label>
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                            <input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+                    <div class="form-group">
+                        <label for="password" class="cols-sm-2 control-label">Password</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                                   aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="password" id="password"
+                                       placeholder="Enter your Password"/>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group ">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign in</button>
-                </div>
-                <div class="login-register">
-                    <a href="/view/signup.jsp">Create account</a>
-                </div>
-            </form>
+                    <div class="form-group ">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign in</button>
+                    </div>
+                    <div class="login-register">
+                        <a href="/view/signup.jsp">Create account</a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+
 
 <script type="text/javascript" src="assets/js/bootstrap.js"></script>
 </body>
