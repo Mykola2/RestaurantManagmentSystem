@@ -8,6 +8,8 @@ import org.training.model.dao.connection.ConnectionManager;
 import org.training.model.entities.Order;
 import org.training.service.OrderService;
 
+import java.util.List;
+
 /**
  * Created by nicko on 1/27/2017.
  */
@@ -40,6 +42,33 @@ public class OrderServiceImpl implements OrderService {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Order> getOpened() {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            return orderDAO.getOpened();
+        }
+    }
+
+    @Override
+    public void setClosedById(Integer id) {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            connection.beginTransaction();
+            orderDAO.setClosedById(id);
+            connection.commit();
+
+        }
+    }
+
+    @Override
+    public List<Order> getClosed() {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            return orderDAO.getClosed();
         }
     }
 }

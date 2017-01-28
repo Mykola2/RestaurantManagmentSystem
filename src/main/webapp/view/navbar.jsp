@@ -28,8 +28,14 @@
 
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
+            <c:if test="${sessionScope.role == 'User'}">
             <li><a href="/menu">Menu</a></li>
             <li><a href="/order">Order</a></li>
+            </c:if>
+            <c:if test="${sessionScope.role == 'Admin'}">
+                <li><a href="/orders">Orders</a></li>
+                <li><a href="/old">Closed Orders</a></li>
+            </c:if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 

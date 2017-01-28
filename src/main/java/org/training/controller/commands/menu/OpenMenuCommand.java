@@ -1,5 +1,6 @@
-package org.training.controller.commands;
+package org.training.controller.commands.menu;
 
+import org.training.controller.commands.Command;
 import org.training.model.entities.Item;
 import org.training.service.ItemService;
 import org.training.service.impl.ItemServiceImpl;

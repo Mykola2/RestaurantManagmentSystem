@@ -1,8 +1,6 @@
 package org.training.model.entities;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,6 +14,9 @@ public class Order {
     private User user;
     private Boolean isOpen;
     private Set<OrderItem> orderItems;
+
+    public Order() {
+    }
 
     public Order(OrderItem firstItem) {
         orderItems = new HashSet<>();
@@ -71,8 +72,8 @@ public class Order {
         return isOpen;
     }
 
-    public void setOpen(Boolean open) {
-        isOpen = open;
+    public void setOpen() {
+        isOpen = true;
     }
 
     public Set<OrderItem> getOrderItems() {

@@ -7,20 +7,20 @@ public class Item {
     private Integer id;
     private Double price;
     private String name;
-    private String weight;
+    private Integer weight;
 
-    public Item(Integer id, Double price, String name, String weight) {
+    public Item(Integer id, Double price, String name, Integer weight) {
         this.id = id;
         this.price = price;
         this.name = name;
         this.weight = weight;
     }
 
-    public String getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

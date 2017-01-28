@@ -1,5 +1,6 @@
-package org.training.controller.commands;
+package org.training.controller.commands.authorization;
 
+import org.training.controller.commands.Command;
 import org.training.model.entities.User;
 import org.training.service.UserService;
 import org.training.service.impl.UserServiceImpl;
@@ -21,7 +22,6 @@ public class SignInCommand implements Command {
 
         try {
             User existingUser = userService.findByLogin(user.getLogin());
-            System.out.println(existingUser.getId());
             if (existingUser != null) {
                 String password = user.getPassword();
                 String existingPassword = existingUser.getPassword();
@@ -31,6 +31,7 @@ public class SignInCommand implements Command {
                     existingUser.setPassword(null);
                     session.setAttribute("id", existingUser.getId());
                     session.setAttribute("login", existingUser.getLogin());
+                    session.setAttribute("role", existingUser.getRole().toString());
                     return "/";
                 }
             }

@@ -1,11 +1,11 @@
-package org.training.controller.commands;
+package org.training.controller.commands.order;
 
+import org.training.controller.commands.Command;
 import org.training.model.entities.Order;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * Created by nicko on 1/27/2017.

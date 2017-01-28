@@ -1,4 +1,6 @@
-package org.training.controller.commands;
+package org.training.controller.commands.authorization;
+
+import org.training.controller.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

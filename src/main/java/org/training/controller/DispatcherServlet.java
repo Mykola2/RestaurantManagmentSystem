@@ -2,7 +2,7 @@ package org.training.controller;
 
 import org.training.controller.commands.Command;
 import org.training.controller.commands.holder.CommandHolder;
-import org.training.controller.commands.Init.InitAllComands;
+import org.training.controller.commands.init.InitAllComands;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

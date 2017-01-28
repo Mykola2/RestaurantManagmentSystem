@@ -1,7 +1,13 @@
-package org.training.controller.commands.Init;
+package org.training.controller.commands.init;
 
 import org.training.controller.commands.*;
+import org.training.controller.commands.authorization.LogoutCommand;
+import org.training.controller.commands.authorization.OpenSignUpCommand;
+import org.training.controller.commands.authorization.SignInCommand;
+import org.training.controller.commands.authorization.SignUpCommand;
 import org.training.controller.commands.holder.CommandHolder;
+import org.training.controller.commands.menu.OpenMenuCommand;
+import org.training.controller.commands.order.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +28,10 @@ public class InitAllComands {
         postCommands.put("/menu", new OpenMenuCommand());
         postCommands.put("/addToOrder", new AddToOrderCommand());
         postCommands.put("/confirm", new ConfirmOrderCommand());
-        CommandHolder commandHolder = new CommandHolder(postCommands, getCommands);
-        return commandHolder;
+        getCommands.put("/orders", new OpenOrdersCommand());
+        postCommands.put("/orders", new OpenOrdersCommand());
+        postCommands.put("/close", new CloseOrderCommand());
+        getCommands.put("/old", new OpenClosedOrders());
+        return new CommandHolder(postCommands, getCommands);
     }
 }

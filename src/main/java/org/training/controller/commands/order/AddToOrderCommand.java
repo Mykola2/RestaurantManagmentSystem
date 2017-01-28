@@ -1,5 +1,6 @@
-package org.training.controller.commands;
+package org.training.controller.commands.order;
 
+import org.training.controller.commands.Command;
 import org.training.model.entities.Item;
 import org.training.model.entities.Order;
 import org.training.model.entities.OrderItem;
@@ -33,7 +34,7 @@ public class AddToOrderCommand implements Command {
         if (session.getAttribute("order") == null) {
             order = new Order(orderItem);
             order.setUser(userService.findByLogin((String) session.getAttribute("login")));
-            order.setOpen(true);
+            order.setOpen();
             order.setTotalPrice(orderItem.getPrice());
             order.setDateCreated(LocalDate.now());
             session.setAttribute("order", order);

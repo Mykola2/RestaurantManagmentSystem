@@ -10,6 +10,10 @@ public class OrderItem {
     private Integer itemAmount;
     private Double price;
 
+
+    public OrderItem() {
+    }
+
     public OrderItem(Item item) {
         this.item = item;
         this.itemAmount = 1;

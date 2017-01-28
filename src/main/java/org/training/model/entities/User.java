@@ -20,7 +20,7 @@ public class User {
         if (role == 1) {
             this.role = Role.ADMIN;
         } else if (role == 2) {
-            this.role = Role.CLIENT;
+            this.role = Role.USER;
         }
         this.email = email;
     }
@@ -31,7 +31,7 @@ public class User {
         if (role == 1) {
             this.role = Role.ADMIN;
         } else if (role == 2) {
-            this.role = Role.CLIENT;
+            this.role = Role.USER;
         }
         this.email = email;
     }
@@ -48,8 +48,12 @@ public class User {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(int role) {
+        if (role == 1) {
+            this.role = Role.ADMIN;
+        } else if (role == 2) {
+            this.role = Role.USER;
+        }
     }
 
     public String getLogin() {
@@ -76,4 +80,8 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return this.login;
+    }
 }

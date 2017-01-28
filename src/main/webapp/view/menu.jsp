@@ -9,8 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <title>Title</title>
+    <script>
+        <%@include file="/jquery-3.1.1.min.js" %>
+    </script>
+    <title>Menu</title>
 
 </head>
 <style>
@@ -22,52 +24,52 @@
 <div class="container">
     <div class="row">
         <c:forEach items="${menu}" var="menuItem">
-        <div class="col-md-6">
-            <div class="jumbotron">
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object"
-                                 src=""
-                                 alt="...">
-                        </a>
+            <div class="col-md-6">
+                <div class="jumbotron">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="#">
+                                <img class="media-object"
+                                     src=""
+                                     alt="...">
+                            </a>
+                        </div>
+                        <form method="post" action="/addToOrder">
+                            <div class="media-body">
+                                <input type="hidden" name="id" id="id" value="${menuItem.id}">
+                                <input type="hidden" name="price" value="${menuItem.price}">
+                                <h3 class="media-heading">${menuItem.name}</h3>
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <h4 class="media-middle">Price : ${menuItem.price}</h4>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h4 class="media-middle">Weight : ${menuItem.weight}</h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <input type="number" min="1" value="1" class="form-control" name="quantity"
+                                               id="quantity">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <p class="">
+                                            <button class="btn btn-default"
+                                                    type="submit">Add
+                                            </button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <form method="post" action="/addToOrder">
-                        <div class="media-body">
-                            <input type="hidden" name="id" id="id" value="${menuItem.id}">
-                            <input type="hidden" name="price"  value="${menuItem.price}">
-                            <h3 class="media-heading">${menuItem.name}</h3>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <h4 class="media-middle">Price : ${menuItem.price}</h4>
-                                </div>
-                                <div class="col-xs-4">
-                                    <h4 class="media-middle">Weight : ${menuItem.weight}</h4>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-3">
-                                    <input type="number" min="1" value="1" class="form-control" name="quantity"
-                                           id="quantity">
-                                </div>
-                                <div class="col-xs-3">
-                                    <p class="">
-                                        <button class="btn btn-default"
-                                                type="submit">Add
-                                        </button>
-                                    </p>
-                                </div>
-                            </div>
-                    </form>
-
                 </div>
             </div>
-        </div>
+        </c:forEach>
     </div>
-    </c:forEach>
 </div>
-</div>
+
 
 <%--!<c:forEach items="${menu}" var="menuItem">
 

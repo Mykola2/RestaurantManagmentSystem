@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Order</title>
 </head>
 <style>
     <%@include file="/bootstrap.min.css" %>
@@ -44,14 +44,6 @@
     </div>
 </div>
 
-<%--!<c:forEach items="${menu}" var="menuItem">
-
-    <h4 class="list-group-item-heading">${menuItem.name}</h4>
-    <p class="list-group-item-text">${menuItem.price}</p>
-    <span class="minus">-</span>
-    <span class="plus">+</span>
-
-</c:forEach>--%>
 <script>
     $("[type='number']").keypress(function (evt) {
         evt.preventDefault();
