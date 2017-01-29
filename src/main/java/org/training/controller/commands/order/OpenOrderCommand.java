@@ -17,6 +17,7 @@ public class OpenOrderCommand implements Command {
         Order order = (Order) session.getAttribute("order");
         if (order != null) {
             request.setAttribute("orderItems", order.getOrderItems());
+            request.setAttribute("totalprice", order.getTotalPrice());
         }
         return "view/order.jsp";
     }

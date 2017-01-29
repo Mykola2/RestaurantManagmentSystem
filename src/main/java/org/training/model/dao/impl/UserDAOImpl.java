@@ -3,7 +3,6 @@ package org.training.model.dao.impl;
 import org.training.model.dao.UserDAO;
 import org.training.model.entities.User;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +17,7 @@ public class UserDAOImpl implements UserDAO {
     public static final String SELECT_ONE_BY_ID = "SELECT * from user where id = ?";
     public static final String SELECT_ONE_BY_LOGIN = "SELECT * from user where login = ?";
     public static final String CREATE_USER = "INSERT INTO user (`login`, `email`, `Role_idRole`, `password`) VALUES (?,?,?,?)";
+    private static final String WITHDRAW = "UPDATE user set balance = balance - ? where idClient = ?";
 
     public UserDAOImpl(Connection connection) {
         this.connection = connection;
@@ -31,8 +31,13 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
                 resultSet.next();
-                user = new User(resultSet.getString("login"), resultSet.getString("password"),
-                        resultSet.getString("email"), resultSet.getInt("Role_idRole"));
+                user = new User();
+                user.setId(resultSet.getInt("idClient"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail( resultSet.getString("email"));
+                user.setRole(resultSet.getInt("Role_idRole"));
+                user.setBalance(resultSet.getDouble("balance"));
                 return user;
             }
         } catch (Exception e) {
@@ -50,9 +55,13 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
                 resultSet.next();
-                System.out.println(resultSet.getString(1));
-                user = new User(resultSet.getInt("idClient"), resultSet.getString("login"), resultSet.getString("password"),
-                        resultSet.getString("email"), resultSet.getInt("Role_idRole"));
+                user = new User();
+                user.setId(resultSet.getInt("idClient"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setEmail( resultSet.getString("email"));
+                user.setRole(resultSet.getInt("Role_idRole"));
+                user.setBalance(resultSet.getDouble("balance"));
 
                 return user;
             }
@@ -60,6 +69,17 @@ public class UserDAOImpl implements UserDAO {
             throw new RuntimeException("Error by finding user", e);
         }
         return user;
+    }
+
+    @Override
+    public void withdraw(Double totalprice, Integer userId) {
+        try (PreparedStatement statement = connection.prepareStatement(WITHDRAW)) {
+            statement.setDouble(1,totalprice);
+            statement.setInt(2,userId);
+            statement.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

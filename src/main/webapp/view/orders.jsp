@@ -26,6 +26,8 @@
                         <form method="post" action="/close">
                             <div class="media-body">
                                 <input type="hidden" name="id" id="id" value="${order.id}">
+                                <input type="hidden" name="totalprice" id="totalprice" value="${order.totalPrice}">
+                                <input type="hidden" name="iduser" id="iduser" value="${order.user.id}">
                                 <h3 class="media-heading">${order.dateCreated}</h3>
                                 <div class="row">
                                     <div class="col-xs-5">

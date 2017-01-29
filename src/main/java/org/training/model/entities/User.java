@@ -9,6 +9,7 @@ public class User {
     private String password;
     private String email;
     private Role role;
+    private Double balance;
 
     public User() {
     }
@@ -54,6 +55,18 @@ public class User {
         } else if (role == 2) {
             this.role = Role.USER;
         }
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     public String getLogin() {

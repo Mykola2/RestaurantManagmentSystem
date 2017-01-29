@@ -15,4 +15,6 @@ public interface UserDAO {
     void delete(User user);
 
     User findByLogin(String login);
+
+    void withdraw(Double totalprice, Integer userId);
 }

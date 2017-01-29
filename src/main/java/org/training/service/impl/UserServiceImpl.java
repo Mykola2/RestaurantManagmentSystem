@@ -68,4 +68,16 @@ public class UserServiceImpl implements UserService {
             return userDAO.findByLogin(login);
         }
     }
+
+    @Override
+    public void withdraw(Double totalprice, Integer userId) {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            UserDAO userDao = daoFactory.getUserDAO(connection);
+            connection.beginTransaction();
+            userDao.withdraw(totalprice,userId);
+            connection.commit();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

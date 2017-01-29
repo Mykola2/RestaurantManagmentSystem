@@ -46,6 +46,9 @@
                 </c:when>
                 <c:otherwise>
                     <li><a>Hello ${sessionScope.login}!</a></li>
+                    <c:if test="${sessionScope.role == 'User'}">
+                    <li><a>Your balance ${sessionScope.balance}!</a></li>
+                    </c:if>
                     <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </c:otherwise>
             </c:choose>

@@ -16,8 +16,12 @@ public class SignUpCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User(request.getParameter("login"), request.getParameter("password"), request.getParameter("email"),
-                Integer.parseInt(request.getParameter("role")));
+        User user = new User();
+        user.setLogin(request.getParameter("login"));
+        user.setPassword(request.getParameter("password"));
+        user.setEmail(request.getParameter("email"));
+        user.setRole(Integer.parseInt(request.getParameter("role")));
+        user.setBalance(5000.0);
         userService.create(user);
 
         return "/";

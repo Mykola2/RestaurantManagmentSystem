@@ -32,6 +32,7 @@ public class SignInCommand implements Command {
                     session.setAttribute("id", existingUser.getId());
                     session.setAttribute("login", existingUser.getLogin());
                     session.setAttribute("role", existingUser.getRole().toString());
+                    session.setAttribute("balance", existingUser.getBalance());
                     return "/";
                 }
             }

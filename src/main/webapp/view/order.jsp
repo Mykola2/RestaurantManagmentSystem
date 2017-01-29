@@ -38,6 +38,7 @@
                 </div>
             </div>
         </c:forEach>
+        <h2>${totalprice}</h2>
         <form method="post", action="/confirm">
             <input type="submit" class="btn btn-info" value="Confirm"></input>
         </form>

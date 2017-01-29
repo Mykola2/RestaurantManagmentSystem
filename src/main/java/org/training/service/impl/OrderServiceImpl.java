@@ -71,4 +71,16 @@ public class OrderServiceImpl implements OrderService {
             return orderDAO.getClosed();
         }
     }
+
+    @Override
+    public boolean checkBalance(Double totalPrice, Double currentBalance) {
+        if(currentBalance >= totalPrice){
+            currentBalance -= totalPrice;
+            return true;
+        }
+        return false;
+
+    }
+
+
 }

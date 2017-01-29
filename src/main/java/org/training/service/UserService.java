@@ -15,4 +15,6 @@ public interface UserService {
     User find(Integer id);
 
     User findByLogin(String login);
+
+    void withdraw(Double totalprice, Integer userId);
 }

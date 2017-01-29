@@ -15,4 +15,6 @@ public interface OrderService {
     void setClosedById(Integer id);
 
     List<Order> getClosed();
+
+    boolean checkBalance(Double totalPrice, Double currentBalance);
 }
