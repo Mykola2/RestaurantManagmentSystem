@@ -15,32 +15,20 @@ import javax.servlet.http.HttpSession;
 public class SignInCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        user.setLogin(request.getParameter("login"));
-        user.setPassword(request.getParameter("password"));
+
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
         UserService userService = UserServiceImpl.getInstance();
-
-        try {
-            User existingUser = userService.findByLogin(user.getLogin());
-            if (existingUser != null) {
-                String password = user.getPassword();
-                String existingPassword = existingUser.getPassword();
-
-                if (password.equals(existingPassword)) {
-                    HttpSession session = request.getSession();
-                    existingUser.setPassword(null);
-                    session.setAttribute("id", existingUser.getId());
-                    session.setAttribute("login", existingUser.getLogin());
-                    session.setAttribute("role", existingUser.getRole().toString());
-                    session.setAttribute("balance", existingUser.getBalance());
-                    return "/";
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        User existingUser = userService.login(login, password);
+        if (existingUser != null) {
+            HttpSession session = request.getSession();
+            session.setAttribute("id", existingUser.getId());
+            session.setAttribute("login", existingUser.getLogin());
+            session.setAttribute("role", existingUser.getRole().toString());
+            session.setAttribute("balance", existingUser.getBalance());
+            return "/";
         }
-        request.getSession().setAttribute("loginError", "Incorrect credentials.");
-        return "/";
+        request.setAttribute("error","Incorrect credentials");
+        return "/view/signin.jsp";
     }
 }

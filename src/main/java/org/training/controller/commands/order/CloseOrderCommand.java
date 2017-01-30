@@ -8,7 +8,6 @@ import org.training.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by nicko on 1/28/2017.
@@ -19,7 +18,6 @@ public class CloseOrderCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
         Integer userId = Integer.parseInt(request.getParameter("iduser"));
         Double totalPrice = Double.parseDouble(request.getParameter("totalprice"));
         userService.withdraw(totalPrice,userId);

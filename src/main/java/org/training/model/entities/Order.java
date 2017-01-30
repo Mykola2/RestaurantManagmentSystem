@@ -16,6 +16,7 @@ public class Order {
     private Set<OrderItem> orderItems;
 
     public Order() {
+        // default constructor
     }
 
     public Order(OrderItem firstItem) {

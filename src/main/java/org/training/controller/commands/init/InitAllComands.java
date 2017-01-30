@@ -16,6 +16,10 @@ import java.util.Map;
  * Created by nicko on 1/25/2017.
  */
 public class InitAllComands {
+    private InitAllComands() {
+
+    }
+
     public static CommandHolder init() {
         Map<String, Command> getCommands = new HashMap<>();
         Map<String, Command> postCommands = new HashMap<>();

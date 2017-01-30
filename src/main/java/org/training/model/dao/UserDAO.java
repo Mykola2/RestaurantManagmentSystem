@@ -10,10 +10,6 @@ public interface UserDAO {
 
     void create(User user);
 
-    void update(User user);
-
-    void delete(User user);
-
     User findByLogin(String login);
 
     void withdraw(Double totalprice, Integer userId);

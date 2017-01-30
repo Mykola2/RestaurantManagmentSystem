@@ -4,11 +4,10 @@ import org.training.model.dao.ItemDAO;
 import org.training.model.dao.OrderDAO;
 import org.training.model.dao.UserDAO;
 import org.training.model.dao.connection.AbstractConnection;
+import org.training.model.dao.exception.DAOException;
 import org.training.model.dao.impl.ItemDAOImpl;
 import org.training.model.dao.impl.OrderDAOImpl;
 import org.training.model.dao.impl.UserDAOImpl;
-
-import java.sql.Connection;
 
 /**
  * Created by nicko on 1/25/2017.
@@ -29,28 +28,28 @@ public class DAOFactoryImpl implements DAOFactory {
 
     @Override
     public OrderDAO getOrderDAO(AbstractConnection connection) {
-        if (connection.getConnection() instanceof Connection) {
+        if (connection.getConnection() != null) {
             return new OrderDAOImpl(connection.getConnection());
         } else {
-            throw new RuntimeException();
+            throw new DAOException();
         }
     }
 
     @Override
     public ItemDAO getItemDAO(AbstractConnection connection) {
-        if (connection.getConnection() instanceof Connection) {
+        if (connection.getConnection() != null) {
             return new ItemDAOImpl(connection.getConnection());
         } else {
-            throw new RuntimeException();
+            throw new DAOException();
         }
     }
 
     @Override
     public UserDAO getUserDAO(AbstractConnection connection) {
-        if (connection.getConnection() instanceof Connection) {
+        if (connection.getConnection() != null) {
             return new UserDAOImpl(connection.getConnection());
         } else {
-            throw new RuntimeException();
+            throw new DAOException();
         }
     }
 }

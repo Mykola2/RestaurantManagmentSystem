@@ -1,6 +1,7 @@
 package org.training.model.dao.impl;
 
 import org.training.model.dao.OrderDAO;
+import org.training.model.dao.exception.DAOException;
 import org.training.model.entities.Item;
 import org.training.model.entities.Order;
 import org.training.model.entities.OrderItem;
@@ -18,15 +19,17 @@ import java.util.Set;
 public class OrderDAOImpl implements OrderDAO {
 
     public static final String SELECT_ONE_BY_ID = "SELECT * from order where id = ?";
-    private static final String SELECT_OPENED = "SELECT * from restaurant.order " +
+
+    public static final String SELECT = "SELECT * from restaurant.order ";
+    private static final String SELECT_OPENED = SELECT +
             "join user on restaurant.order.Client_idClient = user.idClient " +
             "where isOpen = 1";
 
-    private static final String SELECT_CLOSED = "SELECT * from restaurant.order " +
+    private static final String SELECT_CLOSED = SELECT +
             "join user on restaurant.order.Client_idClient = user.idClient " +
             "where isOpen = 0";
 
-    private static final String SELECT_ORDERITEMS_BY_ID = "SELECT * from restaurant.order " +
+    private static final String SELECT_ORDERITEMS_BY_ID = SELECT +
             "join order_has_item on restaurant.order.idOrder = order_has_item.Order_idOrder " +
             "join item on restaurant.order_has_item.Item_idItem = item.idItem " +
             "where idOrder = ?";
@@ -53,8 +56,8 @@ public class OrderDAOImpl implements OrderDAO {
             ResultSet rs = preparedStatement.getGeneratedKeys();
             rs.next();
             generatedId = rs.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
         createOrderItems(order, generatedId);
 
@@ -70,7 +73,7 @@ public class OrderDAOImpl implements OrderDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
     }
 
@@ -79,25 +82,12 @@ public class OrderDAOImpl implements OrderDAO {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_OPENED)) {
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Order order = new Order();
-                Integer orderId = resultSet.getInt("idOrder");
-                order.setId(orderId);
-                User user = new User();
-                user.setId(resultSet.getInt("idClient"));
-                user.setLogin(resultSet.getString("login"));
-                user.setEmail(resultSet.getString("email"));
-                user.setRole(resultSet.getInt("Role_idRole"));
-                order.setUser(user);
-                order.setOpen();
-                order.setDateCreated(resultSet.getDate("dateCreated").toLocalDate());
-                order.setTotalPrice(resultSet.getDouble("totalPrice"));
-                order.setOrderItems(getOrderItemsByOrderId(order, orderId));
-                orders.add(order);
+            while (resultSet.next()){
+                orders.add(getOrderFromResultSet(resultSet));
             }
             return orders;
-        } catch (Exception e) {
-            throw new RuntimeException("Error by getting orders", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
     }
 
@@ -119,14 +109,8 @@ public class OrderDAOImpl implements OrderDAO {
             return orderItems;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error by getting orderItems", e);
+            throw new DAOException(e);
         }
-    }
-
-    @Override
-    public Order findById(Integer id) {
-
-        return null;
     }
 
     @Override
@@ -135,19 +119,8 @@ public class OrderDAOImpl implements OrderDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
-    }
-
-
-    @Override
-    public void addToOrder(OrderItem item) {
-
-    }
-
-    @Override
-    public void removeFromOrder(OrderItem item) {
-
     }
 
     @Override
@@ -156,24 +129,28 @@ public class OrderDAOImpl implements OrderDAO {
         try (PreparedStatement statement = connection.prepareStatement(SELECT_CLOSED)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Order order = new Order();
-                Integer orderId = resultSet.getInt("idOrder");
-                order.setId(orderId);
-                User user = new User();
-                user.setId(resultSet.getInt("idClient"));
-                user.setLogin(resultSet.getString("login"));
-                user.setEmail(resultSet.getString("email"));
-                user.setRole(resultSet.getInt("Role_idRole"));
-                order.setUser(user);
-                order.setOpen();
-                order.setDateCreated(resultSet.getDate("dateCreated").toLocalDate());
-                order.setTotalPrice(resultSet.getDouble("totalPrice"));
-                order.setOrderItems(getOrderItemsByOrderId(order, orderId));
-                orders.add(order);
+                orders.add(getOrderFromResultSet(resultSet));
             }
             return orders;
-        } catch (Exception e) {
-            throw new RuntimeException("Error by getting orders", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
+    }
+
+    private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
+        Order order = new Order();
+        Integer orderId = resultSet.getInt("idOrder");
+        order.setId(orderId);
+        User user = new User();
+        user.setId(resultSet.getInt("idClient"));
+        user.setLogin(resultSet.getString("login"));
+        user.setEmail(resultSet.getString("email"));
+        user.setRole(resultSet.getInt("Role_idRole"));
+        order.setUser(user);
+        order.setOpen();
+        order.setDateCreated(resultSet.getDate("dateCreated").toLocalDate());
+        order.setTotalPrice(resultSet.getDouble("totalPrice"));
+        order.setOrderItems(getOrderItemsByOrderId(order, orderId));
+        return order;
     }
 }

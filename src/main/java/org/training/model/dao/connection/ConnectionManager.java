@@ -1,5 +1,7 @@
 package org.training.model.dao.connection;
 
+import org.training.model.dao.exception.DAOException;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -10,7 +12,6 @@ import java.sql.SQLException;
  */
 public class ConnectionManager {
     private ConnectionManager() {
-
     }
 
     public static ConnectionManager getInstance() {
@@ -27,9 +28,10 @@ public class ConnectionManager {
             context = new InitialContext();
             DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/RestDB");
             return new MySQLConnection(dataSource.getConnection());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("todo text");
+        } catch (SQLException e) {
+            throw new DAOException();
+        } catch (NamingException e) {
+            throw new RuntimeException(); // todo
         }
 
     }

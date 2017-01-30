@@ -15,5 +15,6 @@ public interface AbstractConnection extends AutoCloseable {
 
     void commit();
 
+    @Override
     void close();
 }

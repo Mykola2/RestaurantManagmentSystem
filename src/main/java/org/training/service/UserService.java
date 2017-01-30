@@ -6,15 +6,13 @@ import org.training.model.entities.User;
  * Created by nicko on 1/25/2017.
  */
 public interface UserService {
-    void create(User user);
-
-    void delete(Integer id);
-
-    void update(User user);
+    void create(String login, String password,String email, Integer role);
 
     User find(Integer id);
 
     User findByLogin(String login);
+
+    User login(String login, String password);
 
     void withdraw(Double totalprice, Integer userId);
 }

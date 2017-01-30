@@ -12,6 +12,7 @@ public class OrderItem {
 
 
     public OrderItem() {
+        // default constructor
     }
 
     public OrderItem(Item item) {

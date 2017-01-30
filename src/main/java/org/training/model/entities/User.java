@@ -12,6 +12,7 @@ public class User {
     private Double balance;
 
     public User() {
+        // default constructor
     }
 
     public User(Integer id, String login, String password, String email, Integer role) {

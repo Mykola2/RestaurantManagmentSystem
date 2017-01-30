@@ -7,6 +7,7 @@ import org.training.model.dao.connection.AbstractConnection;
 import org.training.model.dao.connection.ConnectionManager;
 import org.training.model.entities.Order;
 import org.training.service.OrderService;
+import org.training.service.exception.ServiceException;
 
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
                 connection.commit();
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            throw new ServiceException("Error on create order", e);
         }
     }
 
@@ -60,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
             connection.beginTransaction();
             orderDAO.setClosedById(id);
             connection.commit();
-
         }
     }
 
@@ -74,8 +74,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean checkBalance(Double totalPrice, Double currentBalance) {
-        if(currentBalance >= totalPrice){
-            currentBalance -= totalPrice;
+        if (currentBalance >= totalPrice) {
             return true;
         }
         return false;

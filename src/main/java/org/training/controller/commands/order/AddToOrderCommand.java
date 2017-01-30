@@ -43,7 +43,6 @@ public class AddToOrderCommand implements Command {
             order.getOrderItems().add(orderItem);
             order.setTotalPrice(order.getTotalPrice() + (amount * price));
         }
-        System.out.println(order.getOrderItems().size() + " : " + order.getTotalPrice());
         return "/menu";
     }
 }

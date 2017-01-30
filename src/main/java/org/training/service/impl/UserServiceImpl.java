@@ -7,6 +7,7 @@ import org.training.model.dao.connection.AbstractConnection;
 import org.training.model.dao.connection.ConnectionManager;
 import org.training.model.entities.User;
 import org.training.service.UserService;
+import org.training.service.exception.ServiceException;
 
 /**
  * Created by nicko on 1/25/2017.
@@ -29,28 +30,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(User user) {
+    public void create(String login, String password, String email, Integer role) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRole(role);
+        user.setBalance(5000.0);
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             UserDAO userDao = daoFactory.getUserDAO(connection);
-            if (user != null) {
-                connection.beginTransaction();
-                userDao.create(user);
-                connection.commit();
-            }
+            connection.beginTransaction();
+            userDao.create(user);
+            connection.commit();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        } catch (ServiceException e) {
+            throw new ServiceException("Error on withdraw", e);
         }
-    }
-
-    @Override
-    public void delete(Integer id) {
-
-    }
-
-    @Override
-    public void update(User user) {
-
     }
 
     @Override
@@ -62,22 +58,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User login(String login, String password) {
+        User existingUser;
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            UserDAO userDAO = daoFactory.getUserDAO(connection);
+            existingUser = userDAO.findByLogin(login);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        if(existingUser != null) {
+            if (existingUser.getPassword().equals(password)) {
+                return existingUser;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public User findByLogin(String login) {
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             UserDAO userDAO = daoFactory.getUserDAO(connection);
             return userDAO.findByLogin(login);
         }
     }
-
     @Override
     public void withdraw(Double totalprice, Integer userId) {
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             UserDAO userDao = daoFactory.getUserDAO(connection);
             connection.beginTransaction();
-            userDao.withdraw(totalprice,userId);
+            userDao.withdraw(totalprice, userId);
             connection.commit();
-        }catch (Exception e) {
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            throw new ServiceException("Error on withdraw", e);
         }
     }
 }

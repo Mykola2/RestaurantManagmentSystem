@@ -1,6 +1,7 @@
 package org.training.model.dao.impl;
 
 import org.training.model.dao.UserDAO;
+import org.training.model.dao.exception.DAOException;
 import org.training.model.entities.User;
 
 import java.sql.Connection;
@@ -30,18 +31,11 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
-                resultSet.next();
-                user = new User();
-                user.setId(resultSet.getInt("idClient"));
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
-                user.setEmail( resultSet.getString("email"));
-                user.setRole(resultSet.getInt("Role_idRole"));
-                user.setBalance(resultSet.getDouble("balance"));
+                user = getUserFromResultSet(resultSet);
                 return user;
             }
-        } catch (Exception e) {
-            throw new RuntimeException("Error by finding user", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
         return user;
     }
@@ -51,22 +45,12 @@ public class UserDAOImpl implements UserDAO {
         User user = null;
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ONE_BY_LOGIN)) {
             statement.setString(1, login);
-
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
-                resultSet.next();
-                user = new User();
-                user.setId(resultSet.getInt("idClient"));
-                user.setLogin(resultSet.getString("login"));
-                user.setPassword(resultSet.getString("password"));
-                user.setEmail( resultSet.getString("email"));
-                user.setRole(resultSet.getInt("Role_idRole"));
-                user.setBalance(resultSet.getDouble("balance"));
-
-                return user;
+                user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error by finding user", e);
+            throw new DAOException(e);
         }
         return user;
     }
@@ -77,8 +61,8 @@ public class UserDAOImpl implements UserDAO {
             statement.setDouble(1,totalprice);
             statement.setInt(2,userId);
             statement.executeUpdate();
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (SQLException e){
+            throw new DAOException(e);
         }
     }
 
@@ -90,18 +74,22 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setInt(3, user.getRole().ordinal());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
     }
-
-    @Override
-    public void update(User user) {
-
-    }
-
-    @Override
-    public void delete(User user) {
-
+    private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
+        if(resultSet.next()) {
+            User user;
+            user = new User();
+            user.setId(resultSet.getInt("idClient"));
+            user.setLogin(resultSet.getString("login"));
+            user.setPassword(resultSet.getString("password"));
+            user.setEmail(resultSet.getString("email"));
+            user.setRole(resultSet.getInt("Role_idRole"));
+            user.setBalance(resultSet.getDouble("balance"));
+            return user;
+        }
+        return null;
     }
 }

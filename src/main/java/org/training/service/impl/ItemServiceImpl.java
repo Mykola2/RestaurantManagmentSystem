@@ -18,6 +18,10 @@ public class ItemServiceImpl implements ItemService {
     private ConnectionManager connectionManager;
     private DAOFactory daoFactory;
 
+    private ItemServiceImpl(){
+
+    }
+
     private ItemServiceImpl(ConnectionManager connectionManager, DAOFactory daoFactory) {
         this.connectionManager = connectionManager;
         this.daoFactory = daoFactory;
@@ -35,7 +39,6 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getAll() {
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             ItemDAO itemDAO = daoFactory.getItemDAO(connection);
-            System.out.println(connection);
             return itemDAO.getAll();
         }
 

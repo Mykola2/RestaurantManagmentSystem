@@ -1,11 +1,13 @@
 package org.training.model.dao.impl;
 
 import org.training.model.dao.ItemDAO;
+import org.training.model.dao.exception.DAOException;
 import org.training.model.entities.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ public class ItemDAOImpl implements ItemDAO {
                 items.add(item);
             }
             return items;
-        } catch (Exception e) {
-            throw new RuntimeException("Error by getting items", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
     }
 
@@ -46,8 +48,8 @@ public class ItemDAOImpl implements ItemDAO {
             resultSet.next();
             return new Item(resultSet.getInt(1), resultSet.getDouble(3),
                     resultSet.getString(2), resultSet.getInt(4));
-        } catch (Exception e) {
-            throw new RuntimeException("Error by finding Item", e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
         }
     }
 }

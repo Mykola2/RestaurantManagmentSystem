@@ -2,7 +2,6 @@ package org.training.controller.commands.holder;
 
 import org.training.controller.commands.Command;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,9 +26,9 @@ public class CommandHolder {
 
     public Command getCommand(String method, String url) {
         Command command = null;
-        if (method.equals("POST")) {
+        if ("POST".equals(method)) {
             command = getPostCommand(url);
-        } else if (method.equals("GET")) {
+        } else if ("GET".equals(method)) {
             command = getGetCommand(url);
         }
 

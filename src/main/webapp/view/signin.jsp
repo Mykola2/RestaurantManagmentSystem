@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,43 +85,48 @@
 
 <jsp:include page="/view/navbar.jsp"/>
 
-    <div class="container">
-        <div class="row main">
-            <div class="main-login main-center">
-                <form class="form-horizontal" method="post" action="/signin">
-                    <div class="form-group">
-                        <label for="login" class="cols-sm-2 control-label">Login</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="login" id="login"
-                                       placeholder="Enter your login"/>
-                            </div>
+<div class="container">
+    <div class="row main">
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="post" action="/signin">
+                <div class="form-group">
+                    <label for="login" class="cols-sm-2 control-label">Login</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" name="login" id="login"
+                                   placeholder="Enter your login"/>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="password" class="cols-sm-2 control-label">Password</label>
-                        <div class="cols-sm-10">
-                            <div class="input-group">
+                <div class="form-group">
+                    <label for="password" class="cols-sm-2 control-label">Password</label>
+                    <div class="cols-sm-10">
+                        <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
                                                                    aria-hidden="true"></i></span>
-                                <input type="password" class="form-control" name="password" id="password"
-                                       placeholder="Enter your Password"/>
-                            </div>
+                            <input type="password" class="form-control" name="password" id="password"
+                                   placeholder="Enter your Password"/>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group ">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign in</button>
-                    </div>
-                    <div class="login-register">
-                        <a href="/view/signup.jsp">Create account</a>
-                    </div>
-                </form>
-            </div>
+                <div class="form-group ">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign in</button>
+                </div>
+                <div class="login-register">
+                    <a href="/view/signup.jsp">Create account</a>
+                </div>
+            </form>
+            <c:if test="${error == 'Incorrect credentials'}">
+                <div class="alert alert-danger">
+                        ${error}
+                </div>
+            </c:if>
         </div>
     </div>
+</div>
 
 
 <script type="text/javascript" src="assets/js/bootstrap.js"></script>

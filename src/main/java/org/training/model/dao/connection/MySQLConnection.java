@@ -1,5 +1,7 @@
 package org.training.model.dao.connection;
 
+import org.training.model.dao.exception.DAOException;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -26,7 +28,7 @@ public class MySQLConnection implements AbstractConnection {
             isTransactionBegin = true;
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
 
     }
@@ -38,7 +40,7 @@ public class MySQLConnection implements AbstractConnection {
             connection.rollback();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
     }
 
@@ -49,7 +51,7 @@ public class MySQLConnection implements AbstractConnection {
             connection.setAutoCommit(true);
             isTransactionCommitted = true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DAOException(e);
         }
     }
 
@@ -61,7 +63,7 @@ public class MySQLConnection implements AbstractConnection {
             }
             connection.close();
         } catch (SQLException e) {
-
+            throw new DAOException(e);
         }
     }
 }
