@@ -29,6 +29,7 @@ public class InitAllComands {
         getCommands.put("/logout", new LogoutCommand());
         getCommands.put("/menu", new OpenMenuCommand());
         getCommands.put("/order", new OpenOrderCommand());
+        postCommands.put("/remove", new RemoveOrderCommand());
         postCommands.put("/menu", new OpenMenuCommand());
         postCommands.put("/addToOrder", new AddToOrderCommand());
         postCommands.put("/confirm", new ConfirmOrderCommand());

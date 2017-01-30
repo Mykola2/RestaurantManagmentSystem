@@ -4,8 +4,8 @@ package org.training.model.entities;
  * Created by nicko on 1/25/2017.
  */
 public enum Role {
-    USER("User"),
-    ADMIN("Admin");
+    ADMIN("Admin"),
+    USER("User");
 
     private final String name;
 

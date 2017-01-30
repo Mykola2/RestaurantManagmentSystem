@@ -119,7 +119,7 @@
                     <a href="/view/signup.jsp">Create account</a>
                 </div>
             </form>
-            <c:if test="${error == 'Incorrect credentials'}">
+            <c:if test="${not empty error}">
                 <div class="alert alert-danger">
                         ${error}
                 </div>

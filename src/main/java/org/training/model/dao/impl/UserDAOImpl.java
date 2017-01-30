@@ -17,7 +17,8 @@ public class UserDAOImpl implements UserDAO {
 
     public static final String SELECT_ONE_BY_ID = "SELECT * from user where id = ?";
     public static final String SELECT_ONE_BY_LOGIN = "SELECT * from user where login = ?";
-    public static final String CREATE_USER = "INSERT INTO user (`login`, `email`, `Role_idRole`, `password`) VALUES (?,?,?,?)";
+    public static final String SELECT_ONE_BY_EMAIL = "SELECT * from user where email = ?";
+    public static final String CREATE_USER = "INSERT INTO user (`login`, `email`, `Role_idRole`, `password`,`balance`) VALUES (?,?,?,?,?)";
     private static final String WITHDRAW = "UPDATE user set balance = balance - ? where idClient = ?";
 
     public UserDAOImpl(Connection connection) {
@@ -26,13 +27,26 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User find(int id) {
+        return getUserBy(id, SELECT_ONE_BY_ID);
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return getUserBy(login, SELECT_ONE_BY_LOGIN);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return getUserBy(email, SELECT_ONE_BY_EMAIL);
+    }
+
+    private User getUserBy(String parameter, String query) {
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_ONE_BY_ID)) {
-            statement.setInt(1, id);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, parameter);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
                 user = getUserFromResultSet(resultSet);
-                return user;
             }
         } catch (SQLException e) {
             throw new DAOException(e);
@@ -40,11 +54,10 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    @Override
-    public User findByLogin(String login) {
+    private User getUserBy(Integer parameter, String query) {
         User user = null;
-        try (PreparedStatement statement = connection.prepareStatement(SELECT_ONE_BY_LOGIN)) {
-            statement.setString(1, login);
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, parameter);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet != null) {
                 user = getUserFromResultSet(resultSet);
@@ -58,10 +71,10 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void withdraw(Double totalprice, Integer userId) {
         try (PreparedStatement statement = connection.prepareStatement(WITHDRAW)) {
-            statement.setDouble(1,totalprice);
-            statement.setInt(2,userId);
+            statement.setDouble(1, totalprice);
+            statement.setInt(2, userId);
             statement.executeUpdate();
-        }catch (SQLException e){
+        } catch (SQLException e) {
             throw new DAOException(e);
         }
     }
@@ -71,15 +84,17 @@ public class UserDAOImpl implements UserDAO {
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER)) {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setInt(3, user.getRole().ordinal());
+            preparedStatement.setInt(3, user.getRole().ordinal() + 1);
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setDouble(5, user.getBalance());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DAOException(e);
         }
     }
+
     private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
-        if(resultSet.next()) {
+        if (resultSet.next()) {
             User user;
             user = new User();
             user.setId(resultSet.getInt("idClient"));

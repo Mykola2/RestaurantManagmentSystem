@@ -30,23 +30,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void create(String login, String password, String email, Integer role) {
+    public User create(String login, String password, String email, Integer role) {
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
         user.setEmail(email);
         user.setRole(role);
         user.setBalance(5000.0);
+        if (!isUserExist(user)) {
+            try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+                UserDAO userDao = daoFactory.getUserDAO(connection);
+                connection.beginTransaction();
+                userDao.create(user);
+                connection.commit();
+            } catch (ServiceException e) {
+                throw new ServiceException("Error on withdraw", e);
+            }
+            return user;
+        }else
+            return null;
+
+    }
+
+    private Boolean isUserExist(User user) {
+        Boolean isExist = false;
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
-            UserDAO userDao = daoFactory.getUserDAO(connection);
-            connection.beginTransaction();
-            userDao.create(user);
-            connection.commit();
-
-
+            UserDAO userDAO = daoFactory.getUserDAO(connection);
+            if ((userDAO.findByLogin(user.getLogin()) != null) && userDAO.findByEmail(user.getEmail()) != null) {
+                isExist = true;
+            }
         } catch (ServiceException e) {
-            throw new ServiceException("Error on withdraw", e);
+            throw new ServiceException("Failed to check if the user exists", e);
         }
+        return isExist;
     }
 
     @Override
@@ -63,10 +79,10 @@ public class UserServiceImpl implements UserService {
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             UserDAO userDAO = daoFactory.getUserDAO(connection);
             existingUser = userDAO.findByLogin(login);
-        }catch (Exception e){
-            throw new RuntimeException(e);
+        } catch (ServiceException e) {
+            throw new ServiceException("Login Failed", e);
         }
-        if(existingUser != null) {
+        if (existingUser != null) {
             if (existingUser.getPassword().equals(password)) {
                 return existingUser;
             }
@@ -81,6 +97,7 @@ public class UserServiceImpl implements UserService {
             return userDAO.findByLogin(login);
         }
     }
+
     @Override
     public void withdraw(Double totalprice, Integer userId) {
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {

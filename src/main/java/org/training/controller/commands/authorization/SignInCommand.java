@@ -18,6 +18,10 @@ public class SignInCommand implements Command {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        if(!isInputValid(login,password)){
+            request.setAttribute("error","Invalid input");
+            return "/view/signin.jsp";
+        }
         UserService userService = UserServiceImpl.getInstance();
         User existingUser = userService.login(login, password);
         if (existingUser != null) {
@@ -30,5 +34,8 @@ public class SignInCommand implements Command {
         }
         request.setAttribute("error","Incorrect credentials");
         return "/view/signin.jsp";
+    }
+    private Boolean isInputValid(String login, String password) {
+        return !(login.isEmpty() || password.isEmpty());
     }
 }

@@ -38,11 +38,24 @@
                 </div>
             </div>
         </c:forEach>
-        <h2>${totalprice}</h2>
-        <form method="post", action="/confirm">
-            <input type="submit" class="btn btn-info" value="Confirm"></input>
-        </form>
+
+
     </div>
+    <c:if test="${ not empty order}">
+        <h2>Total price: ${totalprice}</h2>
+        <div class="row">
+            <div class="col-lg-1">
+                <form method="post" , action="/confirm">
+                    <input type="submit" class="btn btn-info" value="Confirm"></input>
+                </form>
+            </div>
+            <div class="col-lg-1">
+                <form method="post" , action="/remove">
+                    <input type="submit" class="btn btn-danger" value="Remove"></input>
+                </form>
+            </div>
+        </div>
+    </c:if>
 </div>
 
 <script>

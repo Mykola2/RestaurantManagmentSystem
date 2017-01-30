@@ -12,5 +12,7 @@ public interface UserDAO {
 
     User findByLogin(String login);
 
+    User findByEmail(String email);
+
     void withdraw(Double totalprice, Integer userId);
 }

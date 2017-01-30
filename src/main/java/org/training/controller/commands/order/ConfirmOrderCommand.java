@@ -23,6 +23,7 @@ public class ConfirmOrderCommand implements Command {
         if (orderService.checkBalance(order.getTotalPrice(), currentBalance)) {
             orderService.create(order);
         }
-        return "/";
+        session.removeAttribute("order");
+        return "/view/order.jsp";
     }
 }
