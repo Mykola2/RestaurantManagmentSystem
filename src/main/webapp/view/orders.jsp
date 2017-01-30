@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,7 +29,7 @@
                                 <input type="hidden" name="id" id="id" value="${order.id}">
                                 <input type="hidden" name="totalprice" id="totalprice" value="${order.totalPrice}">
                                 <input type="hidden" name="iduser" id="iduser" value="${order.user.id}">
-                                <h3 class="media-heading">${order.dateCreated}</h3>
+                                <h3 class="media-heading"><tags:localDate date="${order.dateCreated}" pattern="yyyy-MM-dd HH:mm:ss"/></h3>
                                 <div class="row">
                                     <div class="col-xs-5">
                                         <h4 class="media-middle">Total Price : ${order.totalPrice}</h4>

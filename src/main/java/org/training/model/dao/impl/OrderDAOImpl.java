@@ -50,7 +50,7 @@ public class OrderDAOImpl implements OrderDAO {
         Integer generatedId = 0;
         try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ORDER)) {
             preparedStatement.setInt(1, order.getUser().getId());
-            preparedStatement.setDate(2, Date.valueOf(order.getDateCreated()));
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(order.getDateCreated().now()));
             preparedStatement.setDouble(3, order.getTotalPrice());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -82,7 +82,7 @@ public class OrderDAOImpl implements OrderDAO {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_OPENED)) {
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 orders.add(getOrderFromResultSet(resultSet));
             }
             return orders;
@@ -148,7 +148,7 @@ public class OrderDAOImpl implements OrderDAO {
         user.setRole(resultSet.getInt("Role_idRole"));
         order.setUser(user);
         order.setOpen();
-        order.setDateCreated(resultSet.getDate("dateCreated").toLocalDate());
+        order.setDateCreated(resultSet.getTimestamp("dateCreated").toLocalDateTime());
         order.setTotalPrice(resultSet.getDouble("totalPrice"));
         order.setOrderItems(getOrderItemsByOrderId(order, orderId));
         return order;

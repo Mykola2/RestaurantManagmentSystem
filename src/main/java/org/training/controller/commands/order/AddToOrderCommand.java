@@ -12,7 +12,7 @@ import org.training.service.impl.UserServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by nicko on 1/27/2017.
@@ -36,7 +36,7 @@ public class AddToOrderCommand implements Command {
             order.setUser(userService.findByLogin((String) session.getAttribute("login")));
             order.setOpen();
             order.setTotalPrice(orderItem.getPrice());
-            order.setDateCreated(LocalDate.now());
+            order.setDateCreated(LocalDateTime.now());
             session.setAttribute("order", order);
         } else {
             order = (Order) session.getAttribute("order");

@@ -1,6 +1,6 @@
 package org.training.model.entities;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class Order {
     private Integer id;
-    private LocalDate dateCreated;
+    private LocalDateTime dateCreated;
     private Double totalPrice;
     private User user;
     private Boolean isOpen;
@@ -45,11 +45,11 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDate getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDate dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
