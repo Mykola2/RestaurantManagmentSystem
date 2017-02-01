@@ -5,9 +5,16 @@
   Time: 6:31 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
+
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
 <html>
 <head>
     <title>Orders</title>
@@ -32,26 +39,26 @@
                                 <h3 class="media-heading"><tags:localDate date="${order.dateCreated}" pattern="yyyy-MM-dd HH:mm:ss"/></h3>
                                 <div class="row">
                                     <div class="col-xs-5">
-                                        <h4 class="media-middle">Total Price : ${order.totalPrice}</h4>
+                                        <h4 class="media-middle"><fmt:message key="totalprice" bundle="${ msg }"/>: ${order.totalPrice}</h4>
                                     </div>
                                     <div class="col-xs-5">
-                                        <h4 class="media-middle">User login : ${order.user}</h4>
+                                        <h4 class="media-middle"><fmt:message key="userlogin" bundle="${ msg }"/> : ${order.user}</h4>
                                     </div>
                                 </div>
                                 <c:forEach items="${order.orderItems}" var="orderItem" varStatus="loo">
                                     <h5>${orderItem.item}</h5>
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <h5 class="media-middle">Price : ${orderItem.price}</h5>
+                                            <h5 class="media-middle"><fmt:message key="price" bundle="${ msg }"/> : ${orderItem.price}</h5>
                                         </div>
                                         <div class="col-xs-4">
-                                            <h5 class="media-middle">Amount : ${orderItem.itemAmount}</h5>
+                                            <h5 class="media-middle"><fmt:message key="amount" bundle="${ msg }"/> : ${orderItem.itemAmount}</h5>
                                         </div>
                                     </div>
                                 </c:forEach>
                             </div>
                             <input type="submit" class="btn btn-info" style=" position:absolute;bottom:40px;right: 25px"
-                                   value="Confirm">
+                                   value=<fmt:message key="confirm" bundle="${ msg }"/>>
                         </form>
                     </div>
                 </div>

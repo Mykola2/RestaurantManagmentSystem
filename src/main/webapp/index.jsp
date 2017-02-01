@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <!-- saved from url=(0044)https://getbootstrap.com/examples/jumbotron/ -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en" class="">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -41,7 +44,8 @@
 <jsp:include page="/view/navbar.jsp"/>
 <div class="container">
     <h1>Restaurant Managment System</h1>
-    <h2>Application for training purposes</h2>
+    <h2><fmt:message key="description"
+                     bundle="${ msg }"/></h2>
 </div>
 
 <div class="container">

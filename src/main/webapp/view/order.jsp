@@ -5,8 +5,12 @@
   Time: 6:31 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
+
 <html>
 <head>
     <title>Order</title>
@@ -27,10 +31,10 @@
                             <h3 class="media-heading">${orderItem.item}</h3>
                             <div class="row">
                                 <div class="col-xs-4">
-                                    <h4 class="media-middle">Price : ${orderItem.price}</h4>
+                                    <h4 class="media-middle"><fmt:message key="price" bundle="${ msg }"/>: ${orderItem.price}</h4>
                                 </div>
                                 <div class="col-xs-4">
-                                    <h4 class="media-middle">Amount : ${orderItem.itemAmount}</h4>
+                                    <h4 class="media-middle"><fmt:message key="amount" bundle="${ msg }"/> : ${orderItem.itemAmount}</h4>
                                 </div>
                             </div>
                         </div>
@@ -42,16 +46,16 @@
 
     </div>
     <c:if test="${ not empty order}">
-        <h2>Total price: ${totalprice}</h2>
+        <h2><fmt:message key="totalprice" bundle="${ msg }"/>: ${totalprice}</h2>
         <div class="row">
             <div class="col-lg-1">
                 <form method="post" , action="/confirm">
-                    <input type="submit" class="btn btn-info" value="Confirm"></input>
+                    <input type="submit" class="btn btn-info" value=<fmt:message key="confirm" bundle="${ msg }"/>></input>
                 </form>
             </div>
             <div class="col-lg-1">
                 <form method="post" , action="/remove">
-                    <input type="submit" class="btn btn-danger" value="Remove"></input>
+                    <input type="submit" class="btn btn-danger" value=<fmt:message key="remove" bundle="${ msg }"/>></input>
                 </form>
             </div>
         </div>

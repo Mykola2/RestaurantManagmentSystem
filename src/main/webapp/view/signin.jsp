@@ -1,6 +1,13 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:if test="${not empty sessionScope.locale}">
+    <fmt:setLocale value="${sessionScope.locale}"/>
+</c:if>
+<fmt:setBundle basename="messages" var="msg"/>
+
+<html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -90,7 +97,8 @@
         <div class="main-login main-center">
             <form class="form-horizontal" method="post" action="/signin">
                 <div class="form-group">
-                    <label for="login" class="cols-sm-2 control-label">Login</label>
+                    <label for="login" class="cols-sm-2 control-label"><fmt:message key="login"
+                                                                                    bundle="${ msg }"/></label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -101,7 +109,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="cols-sm-2 control-label">Password</label>
+                    <label for="password" class="cols-sm-2 control-label"><fmt:message key="password"
+                                                                                       bundle="${ msg }"/></label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock fa-lg"
@@ -113,10 +122,11 @@
                 </div>
 
                 <div class="form-group ">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign in</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button"><fmt:message key="login"
+                                                                                                             bundle="${ msg }"/></button>
                 </div>
                 <div class="login-register">
-                    <a href="/view/signup.jsp">Create account</a>
+                    <a href="/view/signup.jsp"><fmt:message key="signup" bundle="${ msg }"/></a>
                 </div>
             </form>
             <c:if test="${not empty error}">

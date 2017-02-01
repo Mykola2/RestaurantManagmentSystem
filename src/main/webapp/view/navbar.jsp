@@ -1,14 +1,11 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nicko
-  Date: 1/26/2017
-  Time: 5:23 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
 
 <html>
 <head>
@@ -28,30 +25,32 @@
         </div>
 
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/"></span><fmt:message key="home" bundle="${ msg }"/></a></li>
             <c:if test="${sessionScope.role == 'User'}">
-                <li><a href="/menu">Menu</a></li>
-                <li><a href="/order">Order</a></li>
-                <li><a href="/closed">Closed</a></li>
+                <li><a href="/menu"></span><fmt:message key="menu" bundle="${ msg }"/></a></li>
+                <li><a href="/order"></span><fmt:message key="order" bundle="${ msg }"/></a></li>
+                <li><a href="/closed"></span><fmt:message key="closed" bundle="${ msg }"/></a></li>
             </c:if>
             <c:if test="${sessionScope.role == 'Admin'}">
-                <li><a href="/orders">Orders</a></li>
-                <li><a href="/old">Closed Orders</a></li>
+                <li><a href="/orders"></span><fmt:message key="orders" bundle="${ msg }"/></a></li>
+                <li><a href="/old"></span><fmt:message key="old" bundle="${ msg }"/></a></li>
             </c:if>
+            <li><a href="/enlang">EN</a></li>
+            <li><a href="/ualang">UA</a></li>
+
         </ul>
         <ul class="nav navbar-nav navbar-right">
-
             <c:choose>
                 <c:when test="${empty sessionScope.id}">
-                    <li><a href="/view/signup.jsp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="/view/signin.jsp"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+                    <li><a href="/view/signup.jsp"><span class="glyphicon glyphicon-user"></span><fmt:message key="signup" bundle="${ msg }"/></a></li>
+                    <li><a href="/view/signin.jsp"><span class="glyphicon glyphicon-log-in"></span><fmt:message key="login" bundle="${ msg }"/></a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a>Hello ${sessionScope.login}!</a></li>
+                    <li><a></span><fmt:message key="hello" bundle="${ msg }"/> ${sessionScope.login}!</a></li>
                     <c:if test="${sessionScope.role == 'User'}">
-                        <li><a>Your balance ${sessionScope.balance}!</a></li>
+                        <li><a></span><fmt:message key="balance" bundle="${ msg }"/> ${sessionScope.balance}</a></li>
                     </c:if>
-                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span></span><fmt:message key="logout" bundle="${ msg }"/></a></li>
                 </c:otherwise>
             </c:choose>
 

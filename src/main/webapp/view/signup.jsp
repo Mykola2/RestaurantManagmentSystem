@@ -1,4 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.locale}" />
+<fmt:setBundle basename="messages" var="msg"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,7 +92,7 @@
             <form class="form-horizontal" method="post" action="/signup">
 
                 <div class="form-group">
-                    <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                    <label for="email" class="cols-sm-2 control-label">Email</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
@@ -99,7 +102,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="login" class="cols-sm-2 control-label">Login</label>
+                    <label for="login" class="cols-sm-2 control-label"><fmt:message key="login" bundle="${ msg }"/></label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -109,7 +112,7 @@
                 </div>
 
                 <div class="form-group">
-                <label for="password" class="cols-sm-2 control-label">Password</label>
+                <label for="password" class="cols-sm-2 control-label"><fmt:message key="password" bundle="${ msg }"/></label>
                 <div class="cols-sm-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>

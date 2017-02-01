@@ -14,7 +14,10 @@
     <servlet-name>DispatcherServlet</servlet-name>
     <servlet-class>org.training.controller.DispatcherServlet</servlet-class>
   </servlet>
-
+  <context-param>
+    <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+    <param-value>en_US</param-value>
+  </context-param>
   <servlet-mapping>
     <servlet-name>DispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>

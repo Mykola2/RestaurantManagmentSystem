@@ -8,6 +8,7 @@ import org.training.service.impl.UserServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ResourceBundle;
 
 /**
  * Created by nicko on 1/26/2017.
@@ -19,7 +20,7 @@ public class SignInCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         if(!isInputValid(login,password)){
-            request.setAttribute("error","Invalid input");
+            request.setAttribute("error",ResourceBundle.getBundle("messages").getString("invalidInputError"));
             return "/view/signin.jsp";
         }
         UserService userService = UserServiceImpl.getInstance();
@@ -32,7 +33,7 @@ public class SignInCommand implements Command {
             session.setAttribute("balance", existingUser.getBalance());
             return "/";
         }
-        request.setAttribute("error","Incorrect credentials");
+        request.setAttribute("error", ResourceBundle.getBundle("messages").getString("userExistError"));
         return "/view/signin.jsp";
     }
     private Boolean isInputValid(String login, String password) {
