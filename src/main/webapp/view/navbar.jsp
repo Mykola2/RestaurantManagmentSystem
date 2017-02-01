@@ -12,6 +12,7 @@
 
 <html>
 <head>
+
     <title>Title</title>
 </head>
 <style>
@@ -19,7 +20,7 @@
     <%@include file="/jumbotron.css" %>
 </style>
 <body>
-<c:set var="name" value="id" />
+<c:set var="name" value="id"/>
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -29,8 +30,9 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <c:if test="${sessionScope.role == 'User'}">
-            <li><a href="/menu">Menu</a></li>
-            <li><a href="/order">Order</a></li>
+                <li><a href="/menu">Menu</a></li>
+                <li><a href="/order">Order</a></li>
+                <li><a href="/closed">Closed</a></li>
             </c:if>
             <c:if test="${sessionScope.role == 'Admin'}">
                 <li><a href="/orders">Orders</a></li>
@@ -47,7 +49,7 @@
                 <c:otherwise>
                     <li><a>Hello ${sessionScope.login}!</a></li>
                     <c:if test="${sessionScope.role == 'User'}">
-                    <li><a>Your balance ${sessionScope.balance}!</a></li>
+                        <li><a>Your balance ${sessionScope.balance}!</a></li>
                     </c:if>
                     <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 </c:otherwise>

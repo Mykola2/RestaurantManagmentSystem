@@ -18,9 +18,6 @@ public class CloseOrderCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Integer userId = Integer.parseInt(request.getParameter("iduser"));
-        Double totalPrice = Double.parseDouble(request.getParameter("totalprice"));
-        userService.withdraw(totalPrice,userId);
         orderService.setClosedById(Integer.parseInt(request.getParameter("id")));
         return "/orders";
     }

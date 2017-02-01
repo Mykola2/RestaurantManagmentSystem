@@ -16,4 +16,8 @@ public interface OrderDAO {
     void setClosedById(Integer id);
 
     List<Order> getClosed();
+
+    List<Order> getUserClosedOrders(Integer userId);
+
+    void setOrderPaidById(Integer orderId);
 }

@@ -12,29 +12,12 @@ public class Order {
     private LocalDateTime dateCreated;
     private Double totalPrice;
     private User user;
-    private Boolean isOpen;
+    private Status status;
     private Set<OrderItem> orderItems;
 
     public Order() {
-        // default constructor
-    }
-
-    public Order(OrderItem firstItem) {
         orderItems = new HashSet<>();
-        orderItems.add(firstItem);
-    }
-
-    public Order(User user, Set<OrderItem> items) {
-        this.user = user;
-        this.orderItems = items;
-        double price = 0.0;
-
-        for (OrderItem item : items) {
-            price += item.getPrice();
-            item.setOrder(this);
-        }
-        this.totalPrice = price;
-        this.isOpen = true;
+        this.status = Status.CREATED;
     }
 
     public Integer getId() {
@@ -69,12 +52,12 @@ public class Order {
         this.user = user;
     }
 
-    public Boolean getOpen() {
-        return isOpen;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setOpen() {
-        isOpen = true;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Set<OrderItem> getOrderItems() {

@@ -23,18 +23,25 @@ public class OrderDAOImpl implements OrderDAO {
     public static final String SELECT = "SELECT * from restaurant.order ";
     private static final String SELECT_OPENED = SELECT +
             "join user on restaurant.order.Client_idClient = user.idClient " +
-            "where isOpen = 1";
+            "where Status_IdStatus = 1";
 
     private static final String SELECT_CLOSED = SELECT +
             "join user on restaurant.order.Client_idClient = user.idClient " +
-            "where isOpen = 0";
+            "where Status_IdStatus = 2";
+
+    private static final String SELECT_CLOSED_BY_USER = SELECT +
+            "join user on restaurant.order.Client_idClient = user.idClient " +
+            "where Status_IdStatus = 2 and Client_idClient = ?";
 
     private static final String SELECT_ORDERITEMS_BY_ID = SELECT +
             "join order_has_item on restaurant.order.idOrder = order_has_item.Order_idOrder " +
             "join item on restaurant.order_has_item.Item_idItem = item.idItem " +
             "where idOrder = ?";
 
-    private static final String SET_ORDER_CLOSED = "UPDATE restaurant.order set isOpen = false where idOrder = ?";
+    //private static final String SELECT_CLOSED_BY_USER = SELECT + "where Status_idStatus = 2 and Client_idClient = ?";
+
+    private static final String SET_ORDER_CLOSED = "UPDATE restaurant.order set Status_IdStatus = 2 where idOrder = ?";
+    private static final String SET_ORDER_PAID = "UPDATE restaurant.order set Status_IdStatus = 3 where idOrder = ?";
     private static final String CREATE_ORDER = "INSERT INTO restaurant.order (`Client_idClient`, `dateCreated`,`totalPrice`) VALUES (?,?,?)";
     private static final String ADD_ORDER_ITEM = "INSERT INTO order_has_item (`Order_idOrder`, `Item_idItem`,`amount`,`price`) VALUES (?,?,?,?)";
    /* public static final String REMOVE_ORDER_ITEM = "DELETE INTO order_has_item (`Order_idOrder`, `Item_idItem`,`amount`,`price`) VALUES (?,?,?,?)"*/
@@ -78,7 +85,7 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOpened() {
+    public List<Order> getOpened() { //todo: remove dublicates
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(SELECT_OPENED)) {
             ResultSet resultSet = statement.executeQuery();
@@ -137,6 +144,32 @@ public class OrderDAOImpl implements OrderDAO {
         }
     }
 
+    @Override
+    public List<Order> getUserClosedOrders(Integer userId) {
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_CLOSED_BY_USER)) {
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orders.add(getOrderFromResultSet(resultSet));
+            }
+            return orders;
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void setOrderPaidById(Integer orderId) {
+        try (PreparedStatement statement = connection.prepareStatement(SET_ORDER_PAID)) {
+            statement.setInt(1, orderId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+
+    }
+
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
         Order order = new Order();
         Integer orderId = resultSet.getInt("idOrder");
@@ -147,7 +180,6 @@ public class OrderDAOImpl implements OrderDAO {
         user.setEmail(resultSet.getString("email"));
         user.setRole(resultSet.getInt("Role_idRole"));
         order.setUser(user);
-        order.setOpen();
         order.setDateCreated(resultSet.getTimestamp("dateCreated").toLocalDateTime());
         order.setTotalPrice(resultSet.getDouble("totalPrice"));
         order.setOrderItems(getOrderItemsByOrderId(order, orderId));

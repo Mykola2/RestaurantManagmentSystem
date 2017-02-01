@@ -30,13 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(String login, String password, String email, Integer role) {
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setRole(role);
-        user.setBalance(5000.0);
+    public User create(User user) {
         if (!isUserExist(user)) {
             try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
                 UserDAO userDao = daoFactory.getUserDAO(connection);

@@ -17,4 +17,8 @@ public interface OrderService {
     List<Order> getClosed();
 
     boolean checkBalance(Double totalPrice, Double currentBalance);
+
+    List<Order> getUserClosedOrders(Integer userId);
+
+    void setOrderPaidById(Integer orderId);
 }

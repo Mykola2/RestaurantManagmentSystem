@@ -37,6 +37,9 @@ public class InitAllComands {
         postCommands.put("/orders", new OpenOrdersCommand());
         postCommands.put("/close", new CloseOrderCommand());
         getCommands.put("/old", new OpenClosedOrders());
+        getCommands.put("/closed", new OpenUserClosedOrdersCommand());
+        postCommands.put("/closed", new OpenUserClosedOrdersCommand());
+        postCommands.put("/pay", new PayCommand());
         return new CommandHolder(postCommands, getCommands);
     }
 }

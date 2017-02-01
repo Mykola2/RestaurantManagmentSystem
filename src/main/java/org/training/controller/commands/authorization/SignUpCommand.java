@@ -19,12 +19,19 @@ public class SignUpCommand implements Command {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+
         if (!isInputValid(login, password, email)) {
             request.setAttribute("error", "Invalid input");
             return "/view/signup.jsp";
         }
         Integer role = Integer.parseInt(request.getParameter("role"));
-        if (userService.create(login, password, email, role) != null) {
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setRole(role);
+        user.setBalance(5000.0);
+        if (userService.create(user) != null) {
             return "/";
         }
         request.setAttribute("error", "User already exist");

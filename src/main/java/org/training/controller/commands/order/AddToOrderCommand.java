@@ -32,11 +32,11 @@ public class AddToOrderCommand implements Command {
         orderItem.setPrice(amount * price);
         Order order;
         if (session.getAttribute("order") == null) {
-            order = new Order(orderItem);
+            order = new Order();
             order.setUser(userService.findByLogin((String) session.getAttribute("login")));
-            order.setOpen();
             order.setTotalPrice(orderItem.getPrice());
             order.setDateCreated(LocalDateTime.now());
+            order.getOrderItems().add(orderItem);
             session.setAttribute("order", order);
         } else {
             order = (Order) session.getAttribute("order");

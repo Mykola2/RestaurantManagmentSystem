@@ -81,5 +81,23 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    @Override
+    public List<Order> getUserClosedOrders(Integer userId) {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            return orderDAO.getUserClosedOrders(userId);
+        }
+    }
+
+    @Override
+    public void setOrderPaidById(Integer orderId) {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            OrderDAO orderDAO = daoFactory.getOrderDAO(connection);
+            connection.beginTransaction();
+            orderDAO.setOrderPaidById(orderId);
+            connection.commit();
+        }
+    }
+
 
 }
