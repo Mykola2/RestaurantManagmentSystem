@@ -1,10 +1,10 @@
 package org.training.service.impl;
 
-import org.training.model.dao.factory.DAOFactory;
-import org.training.model.dao.factory.DAOFactoryImpl;
-import org.training.model.dao.ItemDAO;
-import org.training.model.dao.connection.AbstractConnection;
-import org.training.model.dao.connection.ConnectionManager;
+import org.training.dao.factory.DAOFactory;
+import org.training.dao.factory.DAOFactoryImpl;
+import org.training.dao.ItemDAO;
+import org.training.dao.connection.AbstractConnection;
+import org.training.dao.connection.ConnectionManager;
 import org.training.model.entities.Item;
 import org.training.service.ItemService;
 

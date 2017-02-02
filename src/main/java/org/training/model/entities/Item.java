@@ -9,13 +9,6 @@ public class Item {
     private String name;
     private Integer weight;
 
-    public Item(Integer id, Double price, String name, Integer weight) {
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.weight = weight;
-    }
-
     public Integer getWeight() {
         return weight;
     }
@@ -51,5 +44,33 @@ public class Item {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public static class Builder{
+        Item item = new Item();
+
+        public Builder setId(Integer id) {
+            item.id = id;
+            return this;
+        }
+
+        public Builder setPrice(Double price) {
+            item.price = price;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            item.name = name;
+            return this;
+        }
+
+        public Builder setWeight(Integer weight) {
+            item.weight = weight;
+            return this;
+        }
+
+        public Item build() {
+            return item;
+        }
     }
 }

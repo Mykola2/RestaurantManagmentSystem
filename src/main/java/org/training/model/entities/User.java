@@ -1,5 +1,7 @@
 package org.training.model.entities;
 
+import javax.jws.soap.SOAPBinding;
+
 /**
  * Created by nicko on 1/18/2017.
  */
@@ -10,33 +12,6 @@ public class User {
     private String email;
     private Role role;
     private Double balance;
-
-    public User() {
-        // default constructor
-    }
-
-    public User(Integer id, String login, String password, String email, Integer role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        if (role == 1) {
-            this.role = Role.ADMIN;
-        } else if (role == 2) {
-            this.role = Role.USER;
-        }
-        this.email = email;
-    }
-
-    public User(String login, String password, String email, Integer role) {
-        this.login = login;
-        this.password = password;
-        if (role == 1) {
-            this.role = Role.ADMIN;
-        } else if (role == 2) {
-            this.role = Role.USER;
-        }
-        this.email = email;
-    }
 
     public Integer getId() {
         return id;
@@ -97,5 +72,47 @@ public class User {
     @Override
     public String toString() {
         return this.login;
+    }
+
+    public static class Builder {
+        private User user = new User();
+
+        public Builder setId(int id) {
+            user.id = id;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            user.password = password;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            user.email = email;
+            return this;
+        }
+
+        public Builder setLogin(String login) {
+            user.login = login;
+            return this;
+        }
+
+        public Builder setBalance(Double balance) {
+            user.balance = balance;
+            return this;
+        }
+
+        public Builder setRole(int role) {
+            if (role == 1) {
+                user.role = Role.ADMIN;
+            } else if (role == 2) {
+                user.role = Role.USER;
+            }
+            return this;
+        }
+
+        public User build() {
+            return user;
+        }
     }
 }

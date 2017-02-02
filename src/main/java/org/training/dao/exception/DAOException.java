@@ -1,4 +1,4 @@
-package org.training.model.dao.exception;
+package org.training.dao.exception;
 
 /**
  * Created by nicko on 1/29/2017.

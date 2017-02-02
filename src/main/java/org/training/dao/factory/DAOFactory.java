@@ -1,9 +1,9 @@
-package org.training.model.dao.factory;
+package org.training.dao.factory;
 
-import org.training.model.dao.ItemDAO;
-import org.training.model.dao.OrderDAO;
-import org.training.model.dao.UserDAO;
-import org.training.model.dao.connection.AbstractConnection;
+import org.training.dao.ItemDAO;
+import org.training.dao.OrderDAO;
+import org.training.dao.UserDAO;
+import org.training.dao.connection.AbstractConnection;
 
 /**
  * Created by nicko on 1/25/2017.

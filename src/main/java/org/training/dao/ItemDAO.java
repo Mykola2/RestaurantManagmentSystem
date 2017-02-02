@@ -1,4 +1,4 @@
-package org.training.model.dao;
+package org.training.dao;
 
 import org.training.model.entities.Item;
 

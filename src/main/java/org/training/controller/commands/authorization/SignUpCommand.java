@@ -25,12 +25,13 @@ public class SignUpCommand implements Command {
             return "/view/signup.jsp";
         }
         Integer role = Integer.parseInt(request.getParameter("role"));
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setEmail(email);
-        user.setRole(role);
-        user.setBalance(5000.0);
+        User user = new User.Builder()
+                .setLogin(login)
+                .setPassword(password)
+                .setEmail(email)
+                .setRole(role)
+                .setBalance(5000.0)
+                .build();
         if (userService.create(user) != null) {
             return "/";
         }

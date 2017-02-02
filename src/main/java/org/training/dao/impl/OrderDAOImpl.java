@@ -1,7 +1,7 @@
-package org.training.model.dao.impl;
+package org.training.dao.impl;
 
-import org.training.model.dao.OrderDAO;
-import org.training.model.dao.exception.DAOException;
+import org.training.dao.OrderDAO;
+import org.training.dao.exception.DAOException;
 import org.training.model.entities.Item;
 import org.training.model.entities.Order;
 import org.training.model.entities.OrderItem;
@@ -38,13 +38,10 @@ public class OrderDAOImpl implements OrderDAO {
             "join item on restaurant.order_has_item.Item_idItem = item.idItem " +
             "where idOrder = ?";
 
-    //private static final String SELECT_CLOSED_BY_USER = SELECT + "where Status_idStatus = 2 and Client_idClient = ?";
-
     private static final String SET_ORDER_CLOSED = "UPDATE restaurant.order set Status_IdStatus = 2 where idOrder = ?";
     private static final String SET_ORDER_PAID = "UPDATE restaurant.order set Status_IdStatus = 3 where idOrder = ?";
     private static final String CREATE_ORDER = "INSERT INTO restaurant.order (`Client_idClient`, `dateCreated`,`totalPrice`) VALUES (?,?,?)";
     private static final String ADD_ORDER_ITEM = "INSERT INTO order_has_item (`Order_idOrder`, `Item_idItem`,`amount`,`price`) VALUES (?,?,?,?)";
-   /* public static final String REMOVE_ORDER_ITEM = "DELETE INTO order_has_item (`Order_idOrder`, `Item_idItem`,`amount`,`price`) VALUES (?,?,?,?)"*/
 
     private Connection connection;
 
@@ -108,8 +105,12 @@ public class OrderDAOImpl implements OrderDAO {
                 orderItem.setOrder(order);
                 orderItem.setPrice(resultSet.getDouble("price"));
                 orderItem.setItemAmount(resultSet.getInt("amount"));
-                Item item = new Item(resultSet.getInt("idItem"), resultSet.getDouble("price"),
-                        resultSet.getString("title"), resultSet.getInt("weight"));
+                Item item = new Item.Builder()
+                        .setId(resultSet.getInt("idItem"))
+                        .setPrice(resultSet.getDouble("price"))
+                        .setName(resultSet.getString("title"))
+                        .setWeight(resultSet.getInt("weight"))
+                        .build();
                 orderItem.setItem(item);
                 orderItems.add(orderItem);
             }
@@ -171,17 +172,22 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
-        Order order = new Order();
+
+        User user = new User.Builder()
+                .setId(resultSet.getInt("idClient"))
+                .setLogin(resultSet.getString("login"))
+                .setPassword(resultSet.getString("password"))
+                .setEmail(resultSet.getString("email"))
+                .setRole(resultSet.getInt("Role_idRole"))
+                .setBalance(resultSet.getDouble("balance"))
+                .build();
         Integer orderId = resultSet.getInt("idOrder");
-        order.setId(orderId);
-        User user = new User();
-        user.setId(resultSet.getInt("idClient"));
-        user.setLogin(resultSet.getString("login"));
-        user.setEmail(resultSet.getString("email"));
-        user.setRole(resultSet.getInt("Role_idRole"));
-        order.setUser(user);
-        order.setDateCreated(resultSet.getTimestamp("dateCreated").toLocalDateTime());
-        order.setTotalPrice(resultSet.getDouble("totalPrice"));
+        Order order = new Order.Builder()
+                .setId(orderId)
+                .setUser(user)
+                .setDateCreated(resultSet.getTimestamp("dateCreated").toLocalDateTime())
+                .setTotalPrice(resultSet.getDouble("totalPrice"))
+                .build();
         order.setOrderItems(getOrderItemsByOrderId(order, orderId));
         return order;
     }

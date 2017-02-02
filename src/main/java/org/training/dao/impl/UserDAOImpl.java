@@ -1,7 +1,7 @@
-package org.training.model.dao.impl;
+package org.training.dao.impl;
 
-import org.training.model.dao.UserDAO;
-import org.training.model.dao.exception.DAOException;
+import org.training.dao.UserDAO;
+import org.training.dao.exception.DAOException;
 import org.training.model.entities.User;
 
 import java.sql.Connection;
@@ -95,14 +95,14 @@ public class UserDAOImpl implements UserDAO {
 
     private User getUserFromResultSet(ResultSet resultSet) throws SQLException {
         if (resultSet.next()) {
-            User user;
-            user = new User();
-            user.setId(resultSet.getInt("idClient"));
-            user.setLogin(resultSet.getString("login"));
-            user.setPassword(resultSet.getString("password"));
-            user.setEmail(resultSet.getString("email"));
-            user.setRole(resultSet.getInt("Role_idRole"));
-            user.setBalance(resultSet.getDouble("balance"));
+            User user = new User.Builder()
+                    .setId(resultSet.getInt("idClient"))
+                    .setLogin(resultSet.getString("login"))
+                    .setPassword(resultSet.getString("password"))
+                    .setEmail(resultSet.getString("email"))
+                    .setRole(resultSet.getInt("Role_idRole"))
+                    .setBalance(resultSet.getDouble("balance"))
+                    .build();
             return user;
         }
         return null;

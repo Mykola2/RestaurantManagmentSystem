@@ -1,13 +1,13 @@
-package org.training.model.dao.factory;
+package org.training.dao.factory;
 
-import org.training.model.dao.ItemDAO;
-import org.training.model.dao.OrderDAO;
-import org.training.model.dao.UserDAO;
-import org.training.model.dao.connection.AbstractConnection;
-import org.training.model.dao.exception.DAOException;
-import org.training.model.dao.impl.ItemDAOImpl;
-import org.training.model.dao.impl.OrderDAOImpl;
-import org.training.model.dao.impl.UserDAOImpl;
+import org.training.dao.ItemDAO;
+import org.training.dao.OrderDAO;
+import org.training.dao.UserDAO;
+import org.training.dao.connection.AbstractConnection;
+import org.training.dao.exception.DAOException;
+import org.training.dao.impl.ItemDAOImpl;
+import org.training.dao.impl.OrderDAOImpl;
+import org.training.dao.impl.UserDAOImpl;
 
 /**
  * Created by nicko on 1/25/2017.

@@ -1,7 +1,7 @@
-package org.training.model.dao.impl;
+package org.training.dao.impl;
 
-import org.training.model.dao.ItemDAO;
-import org.training.model.dao.exception.DAOException;
+import org.training.dao.ItemDAO;
+import org.training.dao.exception.DAOException;
 import org.training.model.entities.Item;
 
 import java.sql.Connection;
@@ -29,8 +29,12 @@ public class ItemDAOImpl implements ItemDAO {
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Item item = new Item(resultSet.getInt(1), resultSet.getDouble(3),
-                        resultSet.getString(2), resultSet.getInt(4));
+                Item item = new Item.Builder()
+                        .setId(resultSet.getInt(1))
+                        .setPrice(resultSet.getDouble(3))
+                        .setName(resultSet.getString(2))
+                        .setWeight(resultSet.getInt(4))
+                        .build();
                 items.add(item);
             }
             return items;
@@ -42,12 +46,15 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public Item findById(Integer id) {
         try (PreparedStatement statement = connection.prepareStatement(SELECT_ONE_BY_ID)) {
-
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             resultSet.next();
-            return new Item(resultSet.getInt(1), resultSet.getDouble(3),
-                    resultSet.getString(2), resultSet.getInt(4));
+            return new Item.Builder()
+                    .setId(resultSet.getInt(1))
+                    .setPrice(resultSet.getDouble(3))
+                    .setName(resultSet.getString(2))
+                    .setWeight(resultSet.getInt(4))
+                    .build();
         } catch (SQLException e) {
             throw new DAOException(e);
         }

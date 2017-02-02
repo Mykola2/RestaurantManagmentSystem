@@ -1,6 +1,6 @@
-package org.training.model.dao.connection;
+package org.training.dao.connection;
 
-import org.training.model.dao.exception.DAOException;
+import org.training.dao.exception.DAOException;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
