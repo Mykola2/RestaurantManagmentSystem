@@ -42,8 +42,8 @@
         <ul class="nav navbar-nav navbar-right">
             <c:choose>
                 <c:when test="${empty sessionScope.id}">
-                    <li><a href="/view/signup.jsp"><span class="glyphicon glyphicon-user"></span><fmt:message key="signup" bundle="${ msg }"/></a></li>
-                    <li><a href="/view/signin.jsp"><span class="glyphicon glyphicon-log-in"></span><fmt:message key="login" bundle="${ msg }"/></a></li>
+                    <li><a href="/signup"><span class="glyphicon glyphicon-user"></span><fmt:message key="signup" bundle="${ msg }"/></a></li>
+                    <li><a href="/signin"><span class="glyphicon glyphicon-log-in"></span><fmt:message key="login" bundle="${ msg }"/></a></li>
                 </c:when>
                 <c:otherwise>
                     <li><a></span><fmt:message key="hello" bundle="${ msg }"/> ${sessionScope.login}!</a></li>

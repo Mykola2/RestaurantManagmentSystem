@@ -1,5 +1,6 @@
 package org.training.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.training.dao.OrderDAO;
 import org.training.dao.exception.DAOException;
 import org.training.model.entities.Item;
@@ -17,6 +18,8 @@ import java.util.Set;
  * Created by nicko on 1/25/2017.
  */
 public class OrderDAOImpl implements OrderDAO {
+
+    private static final Logger logger = Logger.getLogger(OrderDAOImpl.class);
 
     public static final String SELECT_ONE_BY_ID = "SELECT * from order where id = ?";
 
@@ -61,6 +64,7 @@ public class OrderDAOImpl implements OrderDAO {
             rs.next();
             generatedId = rs.getInt(1);
         } catch (SQLException e) {
+            logger.error("Error creating order",e);
             throw new DAOException(e);
         }
         createOrderItems(order, generatedId);
@@ -77,6 +81,7 @@ public class OrderDAOImpl implements OrderDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
+            logger.error("Error creating order items",e);
             throw new DAOException(e);
         }
     }
@@ -91,6 +96,7 @@ public class OrderDAOImpl implements OrderDAO {
             }
             return orders;
         } catch (SQLException e) {
+            logger.error("Error retrieving opened orders",e);
             throw new DAOException(e);
         }
     }
@@ -117,6 +123,7 @@ public class OrderDAOImpl implements OrderDAO {
             return orderItems;
 
         } catch (SQLException e) {
+            logger.error("Error retrieving order items by order id",e);
             throw new DAOException(e);
         }
     }
@@ -127,6 +134,7 @@ public class OrderDAOImpl implements OrderDAO {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Error closing order",e);
             throw new DAOException(e);
         }
     }
@@ -141,6 +149,7 @@ public class OrderDAOImpl implements OrderDAO {
             }
             return orders;
         } catch (SQLException e) {
+            logger.error("Error retrieving closed orders",e);
             throw new DAOException(e);
         }
     }
@@ -156,6 +165,7 @@ public class OrderDAOImpl implements OrderDAO {
             }
             return orders;
         } catch (SQLException e) {
+            logger.error("Error retrieving user closed orders",e);
             throw new DAOException(e);
         }
     }
@@ -166,13 +176,13 @@ public class OrderDAOImpl implements OrderDAO {
             statement.setInt(1, orderId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Error paying order",e);
             throw new DAOException(e);
         }
 
     }
 
     private Order getOrderFromResultSet(ResultSet resultSet) throws SQLException {
-
         User user = new User.Builder()
                 .setId(resultSet.getInt("idClient"))
                 .setLogin(resultSet.getString("login"))

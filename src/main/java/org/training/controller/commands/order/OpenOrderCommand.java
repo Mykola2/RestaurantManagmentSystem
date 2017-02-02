@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Order;
 
@@ -19,6 +20,6 @@ public class OpenOrderCommand implements Command {
             request.setAttribute("orderItems", order.getOrderItems());
             request.setAttribute("totalprice", order.getTotalPrice());
         }
-        return "view/order.jsp";
+        return PageConstants.VIEW_ORDER_JSP;
     }
 }

@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Item;
 import org.training.model.entities.Order;
@@ -34,16 +35,14 @@ public class AddToOrderCommand implements Command {
         if (session.getAttribute("order") == null) {
             order = new Order.Builder()
                     .setUser(userService.findByLogin((String) session.getAttribute("login")))
-                    .setTotalPrice(orderItem.getPrice())
                     .setDateCreated(LocalDateTime.now())
                     .build();
-            order.getOrderItems().add(orderItem);
+            order.addOrderItem(orderItem);
             session.setAttribute("order", order);
         } else {
             order = (Order) session.getAttribute("order");
-            order.getOrderItems().add(orderItem);
-            order.setTotalPrice(order.getTotalPrice() + (amount * price));
+            order.addOrderItem(orderItem);
         }
-        return "/menu";
+        return URIConstants.MENU;
     }
 }

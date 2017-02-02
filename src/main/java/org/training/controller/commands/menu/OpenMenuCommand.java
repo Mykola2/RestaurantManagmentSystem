@@ -1,5 +1,6 @@
 package org.training.controller.commands.menu;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Item;
 import org.training.service.ItemService;
@@ -19,6 +20,6 @@ public class OpenMenuCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Item> menu = itemService.getAll();
         request.setAttribute("menu", menu);
-        return "view/menu.jsp";
+        return PageConstants.VIEW_MENU_JSP;
     }
 }

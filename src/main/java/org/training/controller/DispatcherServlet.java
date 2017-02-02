@@ -33,8 +33,7 @@ public class DispatcherServlet extends HttpServlet {
         String view;
         Command command;
         try {
-            command = commandHolder.getCommand(request.getMethod(), request.getRequestURI());
-            System.out.println(request.getMethod() + " " + request.getRequestURI()); // todo: remove, change to logger
+                command = commandHolder.getCommand(request.getMethod(), request.getRequestURI());
         } catch (Exception e) {
             command = commandHolder.getPageNotFoundCommand();
         }

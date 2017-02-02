@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Order;
 import org.training.service.OrderService;
@@ -22,7 +23,7 @@ public class OpenUserClosedOrdersCommand implements Command {
         Integer userId = (Integer) session.getAttribute("id");
         List<Order> closedOrder = orderService.getUserClosedOrders(userId);
         request.setAttribute("closedOrders", closedOrder);
-        return "view/closed.jsp";
+        return PageConstants.VIEW_CLOSED_JSP;
     }
 
 }

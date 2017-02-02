@@ -18,8 +18,9 @@ public class Order {
     private Set<OrderItem> orderItems;
 
     public Order() {
-        orderItems = new HashSet<>();
+        this.orderItems = new HashSet<>();
         this.status = Status.CREATED;
+        this.totalPrice = 0.0;
     }
 
     public Integer getId() {
@@ -71,6 +72,11 @@ public class Order {
             item.setOrder(this);
         }
         this.orderItems = orderItems;
+    }
+
+    public void addOrderItem(OrderItem item) {
+        orderItems.add(item);
+        totalPrice += item.getPrice();
     }
 
     public static class Builder {

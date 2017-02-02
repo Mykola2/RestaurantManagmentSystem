@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         Boolean isExist = false;
         try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
             UserDAO userDAO = daoFactory.getUserDAO(connection);
-            if ((userDAO.findByLogin(user.getLogin()) != null) && userDAO.findByEmail(user.getEmail()) != null) {
+            if ((userDAO.findByLogin(user.getLogin()) != null) || userDAO.findByEmail(user.getEmail()) != null) {
                 isExist = true;
             }
         } catch (ServiceException e) {

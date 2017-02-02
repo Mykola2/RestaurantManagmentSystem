@@ -1,5 +1,8 @@
 package org.training.controller.commands.authorization;
 
+import org.apache.commons.validator.routines.EmailValidator;
+import org.training.constants.PageConstants;
+import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.User;
 import org.training.service.UserService;
@@ -7,6 +10,8 @@ import org.training.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import static org.training.constants.PageConstants.VIEW_SIGNUP_JSP;
 
 /**
  * Created by nicko on 1/25/2017.
@@ -22,7 +27,7 @@ public class SignUpCommand implements Command {
 
         if (!isInputValid(login, password, email)) {
             request.setAttribute("error", "Invalid input");
-            return "/view/signup.jsp";
+            return VIEW_SIGNUP_JSP;
         }
         Integer role = Integer.parseInt(request.getParameter("role"));
         User user = new User.Builder()
@@ -33,13 +38,17 @@ public class SignUpCommand implements Command {
                 .setBalance(5000.0)
                 .build();
         if (userService.create(user) != null) {
-            return "/";
+            return URIConstants.INDEX;
         }
         request.setAttribute("error", "User already exist");
-        return "/view/signup.jsp";
+        return VIEW_SIGNUP_JSP;
     }
 
     private Boolean isInputValid(String login, String password, String email) {
+        EmailValidator validator = EmailValidator.getInstance();
+        if (!validator.isValid(email)) {
+            return false;
+        }
         return !(login.isEmpty() || email.isEmpty() || password.isEmpty());
     }
 }

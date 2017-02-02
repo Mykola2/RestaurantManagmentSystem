@@ -1,5 +1,6 @@
 package org.training.controller.commands.authorization;
 
+import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,6 @@ public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().invalidate();
-        return "/";
+        return URIConstants.INDEX;
     }
 }

@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,6 @@ public class RemoveOrderCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("order");
-        return "/view/order.jsp";
+        return PageConstants.VIEW_ORDER_JSP;
     }
 }

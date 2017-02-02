@@ -1,5 +1,6 @@
 package org.training.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.training.dao.UserDAO;
 import org.training.dao.exception.DAOException;
 import org.training.model.entities.User;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
  * Created by nicko on 1/25/2017.
  */
 public class UserDAOImpl implements UserDAO {
+    private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+
     private Connection connection;
 
     public static final String SELECT_ONE_BY_ID = "SELECT * from user where id = ?";
@@ -49,6 +52,7 @@ public class UserDAOImpl implements UserDAO {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("Error by getting user",e);
             throw new DAOException(e);
         }
         return user;
@@ -63,6 +67,7 @@ public class UserDAOImpl implements UserDAO {
                 user = getUserFromResultSet(resultSet);
             }
         } catch (SQLException e) {
+            logger.error("Error by getting user",e);
             throw new DAOException(e);
         }
         return user;
@@ -75,6 +80,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(2, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Error by withdraw balance",e);
             throw new DAOException(e);
         }
     }
@@ -89,6 +95,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setDouble(5, user.getBalance());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            logger.error("Error creating user",e);
             throw new DAOException(e);
         }
     }

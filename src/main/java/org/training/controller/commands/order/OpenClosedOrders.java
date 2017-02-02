@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Order;
 import org.training.service.OrderService;
@@ -18,6 +19,6 @@ public class OpenClosedOrders implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Order> orders = orderService.getClosed();
         request.setAttribute("orders", orders);
-        return "view/oldOrders.jsp";
+        return PageConstants.VIEW_OLD_ORDERS_JSP;
     }
 }

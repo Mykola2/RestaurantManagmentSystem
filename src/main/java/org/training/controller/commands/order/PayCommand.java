@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.service.OrderService;
 import org.training.service.UserService;
@@ -27,6 +28,6 @@ public class PayCommand implements Command {
         session.setAttribute("balance",currentBalance - totalPrice);
         Integer orderId = Integer.parseInt(request.getParameter("id"));
         orderService.setOrderPaidById(orderId);
-        return "/closed";
+        return URIConstants.CLOSED;
     }
 }

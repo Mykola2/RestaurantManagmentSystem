@@ -1,5 +1,6 @@
 package org.training.dao.impl;
 
+import org.apache.log4j.Logger;
 import org.training.dao.ItemDAO;
 import org.training.dao.exception.DAOException;
 import org.training.model.entities.Item;
@@ -15,6 +16,9 @@ import java.util.List;
  * Created by nicko on 1/25/2017.
  */
 public class ItemDAOImpl implements ItemDAO {
+
+    private static final Logger logger = Logger.getLogger(ItemDAO.class);
+
     private Connection connection;
     private static final String SELECT_ONE_BY_ID = "SELECT * from item where idItem = ?";
     private static final String SELECT_ALL = "SELECT * from item";
@@ -39,6 +43,7 @@ public class ItemDAOImpl implements ItemDAO {
             }
             return items;
         } catch (SQLException e) {
+            logger.error("Error retrieving all items",e);
             throw new DAOException(e);
         }
     }
@@ -56,6 +61,7 @@ public class ItemDAOImpl implements ItemDAO {
                     .setWeight(resultSet.getInt(4))
                     .build();
         } catch (SQLException e) {
+            logger.error("Error retrieving item by id",e);
             throw new DAOException(e);
         }
     }

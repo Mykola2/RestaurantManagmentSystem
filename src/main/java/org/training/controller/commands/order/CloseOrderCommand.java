@@ -1,5 +1,7 @@
 package org.training.controller.commands.order;
 
+
+import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.service.OrderService;
 import org.training.service.UserService;
@@ -14,11 +16,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CloseOrderCommand implements Command {
     private OrderService orderService = OrderServiceImpl.getInstance();
-    private UserService userService = UserServiceImpl.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         orderService.setClosedById(Integer.parseInt(request.getParameter("id")));
-        return "/orders";
+        return URIConstants.ORDERS;
     }
 }

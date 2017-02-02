@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import org.training.constants.PageConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Order;
 import org.training.service.OrderService;
@@ -19,7 +20,7 @@ public class OpenOrdersCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Order> orders = orderService.getOpened();
         request.setAttribute("orders", orders);
-        return "view/orders.jsp";
+        return PageConstants.VIEW_ORDERS_JSP;
     }
 }
 
