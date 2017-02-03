@@ -14,7 +14,7 @@ import java.io.IOException;
  * Created by nicko on 1/25/2017.
  */
 public class DispatcherServlet extends HttpServlet {
-    private CommandHolder commandHolder = InitAllComands.init();
+    CommandHolder commandHolder = InitAllComands.init();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
