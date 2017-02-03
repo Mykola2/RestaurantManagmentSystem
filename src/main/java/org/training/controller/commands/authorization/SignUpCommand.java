@@ -1,7 +1,6 @@
 package org.training.controller.commands.authorization;
 
 import org.apache.commons.validator.routines.EmailValidator;
-import org.training.constants.PageConstants;
 import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.User;
@@ -46,9 +45,6 @@ public class SignUpCommand implements Command {
 
     private Boolean isInputValid(String login, String password, String email) {
         EmailValidator validator = EmailValidator.getInstance();
-        if (!validator.isValid(email)) {
-            return false;
-        }
-        return !(login.isEmpty() || email.isEmpty() || password.isEmpty());
+        return validator.isValid(email) && !(login.isEmpty() || email.isEmpty() || password.isEmpty());
     }
 }
