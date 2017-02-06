@@ -26,13 +26,15 @@
 
         <ul class="nav navbar-nav">
             <li class="active"><a href="/"></span><fmt:message key="home" bundle="${ msg }"/></a></li>
+            <li><a href="/menu"></span><fmt:message key="menu" bundle="${ msg }"/></a></li>
             <c:if test="${sessionScope.role == 'User'}">
-                <li><a href="/menu"></span><fmt:message key="menu" bundle="${ msg }"/></a></li>
                 <li><a href="/order"></span><fmt:message key="order" bundle="${ msg }"/></a></li>
                 <li><a href="/closed"></span><fmt:message key="closed" bundle="${ msg }"/></a></li>
             </c:if>
             <c:if test="${sessionScope.role == 'Admin'}">
                 <li><a href="/orders"></span><fmt:message key="orders" bundle="${ msg }"/></a></li>
+                <li><a href="/view/additem.jsp">Add Item</a></li>
+                <li><a href="/users">Users</a></li>
                 <li><a href="/old"></span><fmt:message key="old" bundle="${ msg }"/></a></li>
             </c:if>
             <li><a href="/enlang">EN</a></li>

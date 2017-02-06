@@ -9,6 +9,8 @@ import org.training.model.entities.User;
 import org.training.service.UserService;
 import org.training.service.exception.ServiceException;
 
+import java.util.List;
+
 /**
  * Created by nicko on 1/25/2017.
  */
@@ -101,6 +103,26 @@ public class UserServiceImpl implements UserService {
             connection.commit();
         } catch (ServiceException e) {
             throw new ServiceException("Error on withdraw", e);
+        }
+    }
+
+    @Override
+    public void setBalance(Double balance, Integer userId) {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            UserDAO userDao = daoFactory.getUserDAO(connection);
+            connection.beginTransaction();
+            userDao.setBalance(balance, userId);
+            connection.commit();
+        } catch (ServiceException e) {
+            throw new ServiceException("Error on withdraw", e);
+        }
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+            UserDAO userDAO= daoFactory.getUserDAO(connection);
+            return userDAO.getAll();
         }
     }
 }

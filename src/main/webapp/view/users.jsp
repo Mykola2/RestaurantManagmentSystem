@@ -1,22 +1,15 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: nicko
-  Date: 1/26/2017
-  Time: 9:06 AM
+  Date: 2/3/2017
+  Time: 11:28 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${sessionScope.locale}" />
-<fmt:setBundle basename="messages" var="msg"/>
 <html>
 <head>
-    <script>
-        <%@include file="/jquery-3.1.1.min.js" %>
-    </script>
-    <title>Menu</title>
-
+    <title>Users</title>
 </head>
 <style>
     <%@include file="/bootstrap.min.css" %>
@@ -31,45 +24,33 @@
         </div>
     </c:if>
     <div class="row">
-        <c:forEach items="${menu}" var="menuItem">
+        <c:forEach items="${users}" var="user">
             <div class="col-md-6">
                 <div class="jumbotron">
                     <div class="media">
-                        <div class="media-left">
-                            <a href="#">
-                                <img class="media-object"
-                                     src=""
-                                     alt="...">
-                            </a>
-                        </div>
-                        <form method="post" action="/addToOrder">
+                        <form method="post" action="/setbalance">
                             <div class="media-body">
-                                <input type="hidden" name="id" id="id" value="${menuItem.id}">
-                                <input type="hidden" name="price" value="${menuItem.price}">
-                                <h3 class="media-heading">${menuItem.name}</h3>
+                                <input type="hidden" name="id" id="id" value="${user.id}">
+                                <h2>${user.login}</h2>
                                 <div class="row">
                                     <div class="col-xs-4">
-                                        <h4 class="media-middle"><fmt:message key="price" bundle="${ msg }"/> : ${menuItem.price}</h4>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <h4 class="media-middle"><fmt:message key="weight" bundle="${ msg }"/> : ${menuItem.weight}</h4>
+                                        <h4 class="media-middle ">Balance : ${user.balance}</h4>
                                     </div>
                                 </div>
-                                <c:if test="${sessionScope.role != 'Admin'}">
+
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <input type="number" min="1" value="1" class="form-control" name="quantity"
-                                               id="quantity">
+                                        <input type="number" min="1" value="1" class="form-control" name="balance"
+                                               id="balance">
                                     </div>
                                     <div class="col-xs-3">
                                         <p class="">
                                             <button class="btn btn-default"
-                                                    type="submit"><fmt:message key="add" bundle="${ msg }"/>
+                                                    type="submit">Set
                                             </button>
                                         </p>
                                     </div>
                                 </div>
-                                </c:if>
                             </div>
                         </form>
                     </div>
@@ -93,5 +74,7 @@
         evt.preventDefault();
     });
 </script>
+</body>
+
 </body>
 </html>

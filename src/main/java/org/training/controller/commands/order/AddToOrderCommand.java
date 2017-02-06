@@ -1,5 +1,6 @@
 package org.training.controller.commands.order;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.training.constants.URIConstants;
 import org.training.controller.commands.Command;
 import org.training.model.entities.Item;
@@ -28,7 +29,11 @@ public class AddToOrderCommand implements Command {
         Item item = itemService.findById(Integer.parseInt(request.getParameter("id")));
         OrderItem orderItem = new OrderItem(item);
         int amount = Integer.parseInt(request.getParameter("quantity"));
-        double price = Double.parseDouble(request.getParameter("price"));
+        if (!checkAmount(amount)){
+            request.setAttribute("error","Negative number");
+            return "/menu";
+        }
+            double price = Double.parseDouble(request.getParameter("price"));
         orderItem.setItemAmount(amount);
         orderItem.setPrice(amount * price);
         Order order;
@@ -44,5 +49,12 @@ public class AddToOrderCommand implements Command {
             order.addOrderItem(orderItem);
         }
         return URIConstants.MENU;
+    }
+
+    private Boolean checkAmount(Integer amount) {
+        if (amount < 1) {
+        return false;
+        }
+        return true;
     }
 }

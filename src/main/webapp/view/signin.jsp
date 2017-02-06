@@ -95,7 +95,7 @@
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <form class="form-horizontal" method="post" action="/signin">
+            <form class="form-horizontal" method="post" action="/signin" htmlE>
                 <div class="form-group">
                     <label for="login" class="cols-sm-2 control-label"><fmt:message key="login"
                                                                                     bundle="${ msg }"/></label>

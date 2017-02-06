@@ -20,4 +20,7 @@ public class URIConstants {
     public static final String ENLANG = "/enlang";
     public static final String PAY = "/pay";
     public static final String INDEX = "/";
+    public static final String ADD_TO_ITEM = "/additem" ;
+    public static final String USERS = "/users";
+    public static final String SET_BALANCE = "/setbalance" ;
 }

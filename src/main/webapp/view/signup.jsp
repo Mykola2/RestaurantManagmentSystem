@@ -108,7 +108,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" name="login" id="login"  placeholder="Enter your Login"/>
+                            <input type="text"  class="form-control" name="login" id="login"  placeholder="Enter your Login"/>
                         </div>
                     </div>
                 </div>

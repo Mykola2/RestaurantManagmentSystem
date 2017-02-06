@@ -22,6 +22,7 @@ public class ItemDAOImpl implements ItemDAO {
     private Connection connection;
     private static final String SELECT_ONE_BY_ID = "SELECT * from item where idItem = ?";
     private static final String SELECT_ALL = "SELECT * from item";
+    public static final String CREATE_ITEM = "INSERT INTO item (`title`, `price`, `weight`) VALUES (?,?,?)";
 
     public ItemDAOImpl(Connection connection) {
         this.connection = connection;
@@ -43,7 +44,7 @@ public class ItemDAOImpl implements ItemDAO {
             }
             return items;
         } catch (SQLException e) {
-            logger.error("Error retrieving all items",e);
+            logger.error("Error retrieving all items", e);
             throw new DAOException(e);
         }
     }
@@ -61,7 +62,20 @@ public class ItemDAOImpl implements ItemDAO {
                     .setWeight(resultSet.getInt(4))
                     .build();
         } catch (SQLException e) {
-            logger.error("Error retrieving item by id",e);
+            logger.error("Error retrieving item by id", e);
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void create(Item item) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ITEM)) {
+            preparedStatement.setString(1, item.getName());
+            preparedStatement.setDouble(2, item.getPrice());
+            preparedStatement.setInt(3, item.getWeight());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error creating item", e);
             throw new DAOException(e);
         }
     }

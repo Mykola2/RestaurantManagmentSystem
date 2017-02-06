@@ -11,4 +11,6 @@ public interface ItemService {
     List<Item> getAll();
 
     Item findById(Integer id);
+
+    Item create(Item item);
 }

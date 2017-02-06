@@ -11,4 +11,6 @@ public interface ItemDAO {
     List<Item> getAll();
 
     Item findById(Integer id);
+
+    void create(Item item);
 }

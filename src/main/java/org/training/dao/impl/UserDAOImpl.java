@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nicko on 1/25/2017.
@@ -23,6 +25,8 @@ public class UserDAOImpl implements UserDAO {
     public static final String SELECT_ONE_BY_EMAIL = "SELECT * from user where email = ?";
     public static final String CREATE_USER = "INSERT INTO user (`login`, `email`, `Role_idRole`, `password`,`balance`) VALUES (?,?,?,?,?)";
     private static final String WITHDRAW = "UPDATE user set balance = balance - ? where idClient = ?";
+    private static final String SET_BALANCE = "UPDATE user set balance = ? where idClient = ?";
+    private static final String SELECT_ALL_USERS = "SELECT * from user where Role_idRole = 2";
 
     public UserDAOImpl(Connection connection) {
         this.connection = connection;
@@ -81,6 +85,41 @@ public class UserDAOImpl implements UserDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Error by withdraw balance",e);
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public void setBalance(Double balance, Integer userId) {
+        try (PreparedStatement statement = connection.prepareStatement(SET_BALANCE)) {
+            statement.setDouble(1, balance);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("Error setting balance",e);
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> items = new ArrayList<>();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_ALL_USERS)) {
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User.Builder()
+                        .setId(resultSet.getInt("idClient"))
+                        .setLogin(resultSet.getString("login"))
+                        .setPassword(resultSet.getString("password"))
+                        .setEmail(resultSet.getString("email"))
+                        .setRole(resultSet.getInt("Role_idRole"))
+                        .setBalance(resultSet.getDouble("balance"))
+                        .build();
+                items.add(user);
+            }
+            return items;
+        } catch (SQLException e) {
+            logger.error("Error retrieving all users", e);
             throw new DAOException(e);
         }
     }

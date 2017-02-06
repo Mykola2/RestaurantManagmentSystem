@@ -45,6 +45,7 @@ public class SignUpCommand implements Command {
 
     private Boolean isInputValid(String login, String password, String email) {
         EmailValidator validator = EmailValidator.getInstance();
+
         return validator.isValid(email) && !(login.isEmpty() || email.isEmpty() || password.isEmpty());
     }
 }

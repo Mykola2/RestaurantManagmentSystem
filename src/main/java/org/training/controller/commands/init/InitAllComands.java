@@ -2,8 +2,11 @@ package org.training.controller.commands.init;
 
 import org.training.constants.URIConstants;
 import org.training.controller.commands.*;
+import org.training.controller.commands.admin.OpenUsersCommand;
+import org.training.controller.commands.admin.SetBalanceCommand;
 import org.training.controller.commands.authorization.*;
 import org.training.controller.commands.holder.CommandHolder;
+import org.training.controller.commands.menu.AddItemCommand;
 import org.training.controller.commands.menu.OpenMenuCommand;
 import org.training.controller.commands.order.*;
 
@@ -28,7 +31,11 @@ public class InitAllComands {
         postCommands.put(URIConstants.SIGNIN, new SignInCommand());
         getCommands.put(URIConstants.LOGOUT, new LogoutCommand());
         getCommands.put(URIConstants.MENU, new OpenMenuCommand());
+        postCommands.put(URIConstants.ADD_TO_ITEM, new AddItemCommand());
+        postCommands.put(URIConstants.SET_BALANCE, new SetBalanceCommand());
         getCommands.put(URIConstants.ORDER, new OpenOrderCommand());
+        getCommands.put(URIConstants.USERS, new OpenUsersCommand());
+        postCommands.put(URIConstants.USERS, new OpenUsersCommand());
         postCommands.put(URIConstants.ORDER, new OpenOrderCommand());
         postCommands.put(URIConstants.REMOVE, new RemoveOrderCommand());
         postCommands.put(URIConstants.MENU, new OpenMenuCommand());

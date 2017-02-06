@@ -7,6 +7,7 @@ import org.training.dao.connection.AbstractConnection;
 import org.training.dao.connection.ConnectionManager;
 import org.training.model.entities.Item;
 import org.training.service.ItemService;
+import org.training.service.exception.ServiceException;
 
 import java.util.List;
 
@@ -53,4 +54,17 @@ public class ItemServiceImpl implements ItemService {
             return itemDAO.findById(id);
         }
     }
+
+    @Override
+    public Item create(Item item) {
+            try (AbstractConnection connection = connectionManager.getMySQLConnection()) {
+                ItemDAO itemDAO = daoFactory.getItemDAO(connection);
+                connection.beginTransaction();
+                itemDAO.create(item);
+                connection.commit();
+            } catch (ServiceException e) {
+                throw new ServiceException("Error on create item", e);
+            }
+        return item;
+        }
 }

@@ -1,4 +1,4 @@
-package org.training.controller;
+package org.training.controller.filter;
 
 
 import org.training.constants.URIConstants;
