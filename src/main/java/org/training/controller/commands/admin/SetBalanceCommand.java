@@ -16,23 +16,23 @@ public class SetBalanceCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        if(request.getParameter("balance").isEmpty()){
-            request.setAttribute("error","Invalid input");
+        if (request.getParameter("balance").isEmpty()) {
+            request.setAttribute("error", "Invalid input");
             return URIConstants.USERS;
         }
         Double balance = Double.parseDouble(request.getParameter("balance"));
         Integer userId = Integer.parseInt(request.getParameter("id"));
-        if (!checkBalance(balance)){
-            request.setAttribute("error","Invalid input");
+        if (!checkBalance(balance)) {
+            request.setAttribute("error", "Invalid input");
             return URIConstants.USERS;
         }
-        userService.setBalance(balance,userId);
+        userService.setBalance(balance, userId);
         return URIConstants.USERS;
 
     }
 
     private boolean checkBalance(Double balance) {
-        if(balance<0 || balance == null){
+        if (balance < 0) {
             return false;
         }
         return true;

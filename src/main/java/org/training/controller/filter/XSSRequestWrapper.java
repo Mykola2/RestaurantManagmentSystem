@@ -8,14 +8,14 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
   
     public XSSRequestWrapper(HttpServletRequest servletRequest) {
         super(servletRequest);
-    } 
-  
+    }
+
     @Override 
     public String[] getParameterValues(String parameter) {
         String[] values = super.getParameterValues(parameter);
   
         if (values == null) {
-            return null; 
+            return new String[0];
         } 
   
         int count = values.length;
@@ -42,7 +42,8 @@ public class XSSRequestWrapper extends HttpServletRequestWrapper {
   
     private String stripXSS(String value) {
         if (value != null) {
-            // Avoid null characters 
+
+            // Avoid null characters
             value = value.replaceAll("", "");
   
             // Avoid anything between script tags 

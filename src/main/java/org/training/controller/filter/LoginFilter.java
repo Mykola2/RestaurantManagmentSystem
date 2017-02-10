@@ -2,11 +2,9 @@ package org.training.controller.filter;
 
 
 import org.training.constants.URIConstants;
-import org.training.model.entities.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
